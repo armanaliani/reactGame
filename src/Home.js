@@ -42,15 +42,15 @@ onStart = (event) => {
     this.state({
         key
     })
+    console.log(gameObj)
 }
 
     render() {
-        const key = this.state.key
         return (
             <main>
                 <h1>Tic Tac Toe</h1>
                 <p>short description about how the game works</p>
-                <Link to={`/${key}gamelobby}`} onClick={this.onStart}>
+                <Link to={`/${this.state.key}gamelobby}`} onClick={this.onStart}>
                     Start Game
                 </Link>
             </main>
