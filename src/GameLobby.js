@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import firebase from "./firebase";
+import {Link} from 'react-router-dom';
 
 
 class GameLobby extends Component {
@@ -27,7 +28,9 @@ class GameLobby extends Component {
         const key = this.props.match.params.gameKey
         return (
             <div>
+                {/* use links as player X and player O versions? */}
                 <p>{`${key}`}</p>
+                <Link to={`/gameboard/${key}`}>Play</Link>
             </div>
         )
     }

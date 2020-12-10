@@ -1,7 +1,7 @@
 // Home Page
 import React, {Component} from "react";
 import firebase from "./firebase";
-import {Link} from "react-router-dom";
+import {withRouter} from "react-router-dom";
 
 class Home extends Component {
     constructor() {
@@ -17,6 +17,7 @@ class Home extends Component {
             cellSeven: '',
             cellEight: '',
             cellNine: '',
+            boardClass: 'X',
         };
     }
 
@@ -35,6 +36,7 @@ onStart = (e) => {
         cellSeven: state.cellSeven,
         cellEight: state.cellEight,
         cellNine: state.cellNine,
+        boardClass: state.boardClass,
     };
 
     const {key} = dbRef.push(gameObj);
@@ -42,6 +44,7 @@ onStart = (e) => {
     this.setState({
         key
     })
+    this.props.history.push(`/lobby/${key}`)
 }
 
     render() {
@@ -49,9 +52,6 @@ onStart = (e) => {
             <main>
                 <h1>Tic Tac Toe</h1>
                 <p>short description about how the game works</p>
-                <Link to={`/lobby/${this.state.key}}`}>
-                    Start Game
-                </Link>
                 <form onSubmit={this.onStart}>
                     <button type="submit">submit</button>
                 </form>
@@ -60,4 +60,4 @@ onStart = (e) => {
     }
 }
 
-export default Home;
+export default withRouter(Home);
