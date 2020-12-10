@@ -1,4 +1,3 @@
-import { render } from '@testing-library/react';
 import React, { Component } from 'react';
 import firebase from "./firebase";
 
@@ -25,6 +24,7 @@ class GameLobby extends Component {
 
 
     render() {
+        const key = this.props.match.params.gameKey
         return (
             <div>
                 <p>{`${key}`}</p>
@@ -32,3 +32,5 @@ class GameLobby extends Component {
         )
     }
 }
+
+export default GameLobby;

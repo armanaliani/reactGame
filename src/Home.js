@@ -21,8 +21,8 @@ class Home extends Component {
     }
 
 // handle events
-onStart = (event) => {
-    event.preventDefault();
+onStart = (e) => {
+    e.preventDefault();
     const dbRef = firebase.database().ref();
     const state = this.state;
     const gameObj = {
@@ -39,10 +39,9 @@ onStart = (event) => {
 
     const {key} = dbRef.push(gameObj);
 
-    this.state({
+    this.setState({
         key
     })
-    console.log(gameObj)
 }
 
     render() {
@@ -50,9 +49,12 @@ onStart = (event) => {
             <main>
                 <h1>Tic Tac Toe</h1>
                 <p>short description about how the game works</p>
-                <Link to={`/${this.state.key}gamelobby}`} onClick={this.onStart}>
+                <Link to={`/lobby/${this.state.key}}`}>
                     Start Game
                 </Link>
+                <form onSubmit={this.onStart}>
+                    <button type="submit">submit</button>
+                </form>
             </main>
         )
     }

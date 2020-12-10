@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Home from './Home';
+import GameLobby from './GameLobby';
 
 
 
@@ -11,7 +12,7 @@ class App extends Component {
     return (
         <Router basename={process.env.PUBLIC_URL}>
           <Route exact path="/" component={Home} />
-          {/* <Route exact path="/lobby/:gameKey" component={GameLobby} />  */}
+          <Route exact path="/lobby/:gameKey" component={GameLobby} /> 
         </Router>
     )
   }
