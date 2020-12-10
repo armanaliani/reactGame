@@ -17,7 +17,9 @@ class Home extends Component {
             cellSeven: '',
             cellEight: '',
             cellNine: '',
-            boardClass: 'X',
+            boardClass: 'x',
+            circleTurn: false,
+            gameOutcome: '',
         };
     }
 
@@ -37,6 +39,8 @@ onStart = (e) => {
         cellEight: state.cellEight,
         cellNine: state.cellNine,
         boardClass: state.boardClass,
+        circleTurn: state.circleTurn,
+        gameOutcome: state.gameOutcome,
     };
 
     const {key} = dbRef.push(gameObj);

@@ -29,7 +29,7 @@ class GameLobby extends Component {
         return (
             <div>
                 {/* use links as player X and player O versions? */}
-                <p>{`${key}`}</p>
+                <p>{`/gameboard/${key}`}</p>
                 <Link to={`/gameboard/${key}`}>Play</Link>
             </div>
         )
