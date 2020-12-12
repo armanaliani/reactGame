@@ -48,19 +48,34 @@ class GameBoard extends Component {
         const cellStateClass = cellNumberArr.toString();
         console.log(cellStateClass)
 
-        if (this.state.some(cellStateClass)) {
-            console.log('match found')
-        }
 
-        // for (let stateItem in this.state) {
-        //     // console.log(stateItem)
+        const stateArray = Object.keys(this.state).map((key) => [String(key), this.state[key]])
+        console.log(stateArray)
+
+        const test = stateArray.map(item => {
+            if ((item[0] === cellStateClass) && (this.state.circleTurn === false)) {
+                item[1] = 'x'
+            } else if ((item[0] === cellStateClass) && (this.state.circleTurn === true)) {
+                item[1] = 'circle'
+            }
+            return item
+        })
+        console.log(test);
+        this.setState({
+            test
+        })
+        console.log(this.state)
+
+        // for (const stateItem in this.state) {
         //     if (stateItem === cellStateClass) {
-        //         console.log(stateItem)
+        //         console.log(stateItem.value)
         //     }
         // }
 
-        // console.log(cell.className)
-        console.log(this.state)
+        // this.setState({
+            
+        // })
+        // console.log(this.state)
 
 
         const currentClass = this.state.boardClass ? 'x' : 'circle' 
