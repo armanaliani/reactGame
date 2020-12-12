@@ -36,7 +36,33 @@ class GameBoard extends Component {
 
     handleClick = (e) => {
         const cell = e.target
-        console.log(cell)
+        const cellClasses = e.target.className
+        // console.log(cellClasses);
+
+        const cellClassArr = cellClasses.split(' ');
+        // console.log(cellClassArr)
+
+        const cellNumberArr = cellClassArr.slice(1,2)
+        // console.log(cellNumberArr)
+
+        const cellStateClass = cellNumberArr.toString();
+        console.log(cellStateClass)
+
+        if (this.state.some(cellStateClass)) {
+            console.log('match found')
+        }
+
+        // for (let stateItem in this.state) {
+        //     // console.log(stateItem)
+        //     if (stateItem === cellStateClass) {
+        //         console.log(stateItem)
+        //     }
+        // }
+
+        // console.log(cell.className)
+        console.log(this.state)
+
+
         const currentClass = this.state.boardClass ? 'x' : 'circle' 
         // // push cell data to firebase ---------------------
         // const key = this.props.match.params.gameKey
