@@ -29,9 +29,20 @@ class GameBoard extends Component {
         .ref(key)
         .on("value", (snapshot) => {
             this.setState({
-                game: snapshot.val()
+                game: snapshot.val(),
+                cellOne: snapshot.val().cellOne,
+                cellTwo: snapshot.val().cellTwo,
+                cellThree: snapshot.val().cellThree,
+                cellFour: snapshot.val().cellFour,
+                cellFive: snapshot.val().cellFive,
+                cellSix: snapshot.val().cellSix,
+                cellSeven: snapshot.val().cellSeven,
+                cellEight: snapshot.val().cellEight,
+                cellNine: snapshot.val().cellNine,
+                boardClass: snapshot.val().boardClass,
+                circleTurn: snapshot.val().circleTurn,
+                gameOutcome: snapshot.val().gameOutcome,
             })
-        console.log(snapshot)
         })
     }
 
