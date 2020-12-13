@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import firebase from './firebase';
 import {Link} from 'react-router-dom';
 
+// component------------------
 class GameBoard extends Component {
     constructor() {
         super();
@@ -17,11 +18,11 @@ class GameBoard extends Component {
             cellEight: '',
             cellNine: '',
             boardClass: 'x',
-            circleTurn: false,
             gameOutcome: '',
         }
     }
 
+    // takes game link to retreive matching firebase game data --------------
     componentDidMount() {
         const key = this.props.match.params.gameKey
         firebase
@@ -40,12 +41,12 @@ class GameBoard extends Component {
                 cellEight: snapshot.val().cellEight,
                 cellNine: snapshot.val().cellNine,
                 boardClass: snapshot.val().boardClass,
-                circleTurn: snapshot.val().circleTurn,
                 gameOutcome: snapshot.val().gameOutcome,
             })
         })
     }
 
+    // when cell is clicked, place the appropriate marker based on turn, push new turn to firebase, and change cell state to 'x' or 'circle' -------------------------
     handleClick = (e) => {
         const cell = e.target
         const state = this.state
@@ -58,54 +59,81 @@ class GameBoard extends Component {
         const cellStateClass = cellNumberArr.toString();
         console.log(cellStateClass)
 
-        // setting cell state of matching state class to x or circle
-        if(cellStateClass === 'cellOne') {
-            this.setState({
-                cellOne: boardClass
-            })
-            this.updateCellData('cellOne')
-        } else if (cellStateClass === 'cellTwo') {
-            this.setState({
-                cellTwo: boardClass
-            })
-            this.updateCellData('cellTwo')
-        } else if (cellStateClass === 'cellThree') {
-            this.setState({
-                cellThree: boardClass
-            })
-            this.updateCellData('cellThree')
-        } else if (cellStateClass === 'cellFour') {
-            this.setState({
-                cellFour: boardClass
-            })
-            this.updateCellData('cellFour')
-        } else if (cellStateClass === 'cellFive') {
-            this.setState({
-                cellFive: boardClass
-            })
-            this.updateCellData('cellFive')
-        } else if (cellStateClass === 'cellSix') {
-            this.setState({
-                cellSix: boardClass
-            })
-            this.updateCellData('cellSix')
-        } else if (cellStateClass === 'cellSeven') {
-            this.setState({
-                cellSeven: boardClass
-            })
-            this.updateCellData('cellSeven')
-        } else if (cellStateClass === 'cellEight') {
-            this.setState({
-                cellEight: boardClass
-            })
-            this.updateCellData('cellEight')
-        } else if (cellStateClass === 'cellNine') {
-            this.setState({
-                cellNine: boardClass
-            })
-            this.updateCellData('cellNine')
-        }
+        // making sure there isnt already a marker in the chosen cell-------
+        if ((!cellClassArr.includes('x')) && (!cellClassArr.includes('circle'))) {
 
+            // setting cell state of matching state class to x or circle
+            if(cellStateClass === 'cellOne') {
+                this.setState({
+                    cellOne: boardClass
+                })
+                this.updateCellData('cellOne')
+            } else if (cellStateClass === 'cellTwo') {
+                this.setState({
+                    cellTwo: boardClass
+                })
+                this.updateCellData('cellTwo')
+            } else if (cellStateClass === 'cellThree') {
+                this.setState({
+                    cellThree: boardClass
+                })
+                this.updateCellData('cellThree')
+            } else if (cellStateClass === 'cellFour') {
+                this.setState({
+                    cellFour: boardClass
+                })
+                this.updateCellData('cellFour')
+            } else if (cellStateClass === 'cellFive') {
+                this.setState({
+                    cellFive: boardClass
+                })
+                this.updateCellData('cellFive')
+            } else if (cellStateClass === 'cellSix') {
+                this.setState({
+                    cellSix: boardClass
+                })
+                this.updateCellData('cellSix')
+            } else if (cellStateClass === 'cellSeven') {
+                this.setState({
+                    cellSeven: boardClass
+                })
+                this.updateCellData('cellSeven')
+            } else if (cellStateClass === 'cellEight') {
+                this.setState({
+                    cellEight: boardClass
+                })
+                this.updateCellData('cellEight')
+            } else if (cellStateClass === 'cellNine') {
+                this.setState({
+                    cellNine: boardClass
+                })
+                this.updateCellData('cellNine')
+            }
+
+            this.switchTurns()
+
+            // places X or O in cell spot
+            placeMark(cell, boardClass)
+            function placeMark(cell, currentClass) {
+                cell.classList.add(currentClass)
+            }
+
+            if (this.checkWin(boardClass)) {
+                this.endGame(false)
+            } else if (this.isDraw()) {
+                this.endGame(true)
+                this.setState({
+                    gameOutcome: 'draw',
+                })
+            } else {
+                this.switchTurns()
+            }
+        }        
+    }
+
+    // switches 'x'/'circle' turn -------------
+    switchTurns = () => {
+        const boardClass = this.state.boardClass
         // switch board class
         if  (boardClass === 'x') {
             this.setState({
@@ -118,21 +146,119 @@ class GameBoard extends Component {
             })
             this.updateBoardClass('boardClass')
         }
-        
-        // switches player turn
-        // const circleTurn = state.circleTurn
-        // this.setState({
-        //     circleTurn: !circleTurn
-        // })
-
-        // places X or O in cell spot
-        placeMark(cell, boardClass)
-        function placeMark(cell, currentClass) {
-            cell.classList.add(currentClass)
-        }
     }
 
-    // push cell data to firebase ---------------------
+    // check to see if theres a winning combination------------
+    checkWin = (currentClass) => {
+        const cellElements = document.querySelectorAll('[data-cell]')
+        const winningCombinations = [
+            // horizontals
+            [0,1,2],
+            [3,4,5],
+            [6,7,8],
+            // verticals
+            [0,3,6],
+            [1,4,7],
+            [2,5,8],
+            // diagonals
+            [0,4,8],
+            [2,4,6],
+        ]
+        // .some will return true if any values within the array are true
+        return winningCombinations.some(combination => {
+            return combination.every(index => {
+                return cellElements[index].classList.contains(currentClass)
+            })
+        })
+    }
+
+    // check to see if all cells have a className of 'x' or 'circle'
+    isDraw = () => {
+        const cellElements = document.querySelectorAll('[data-cell]')
+        return [...cellElements].every(cell => {
+            return cell.classList.contains('x') || cell.classList.contains('circle')
+        })
+    }
+
+    // display game outcome
+    endGame = (draw) => {
+        const boardClass = this.state.boardClass
+        const winningMessageElement = document.getElementById('winningMessage')
+        const winningMessageTextElement = document.querySelector('[data-winning-message-text]')
+        if (draw) {
+            winningMessageTextElement.innerText = "Draw!"
+        } else {
+            if (boardClass === 'x') {
+                winningMessageTextElement.innerText = `X's Win!`
+            } else if (boardClass === 'circle') {
+                winningMessageTextElement.innerText = `O's Win!`
+            }
+        }
+        winningMessageElement.classList.add('show')
+    }
+
+    handleRestart = () => {
+        // remove cell classes
+        const cellElements = document.querySelectorAll('[data-cell]')
+        cellElements.forEach(cell => {
+            cell.classList.remove('x')
+            cell.classList.remove('circle')
+        })
+        // remove game outcome message
+        const winningMessageElement = document.getElementById('winningMessage')
+        winningMessageElement.classList.remove('show')
+
+        this.setState({
+            boardClass: 'x',
+            cellOne: '',
+            cellTwo: '',
+            cellThree: '',
+            cellFour: '',
+            cellFive: '',
+            cellSix: '',
+            cellSeven: '',
+            cellEight: '',
+            cellNine: '',
+        })
+        this.updateNewGame()
+    }
+
+    // clear database game info for new game-------
+    updateNewGame = () => {
+        const key = this.props.match.params.gameKey
+        // set board class back to x
+        const dbRefBoard = firebase.database().ref(`${key}/boardClass`);
+        dbRefBoard.once('value', (snap) => {
+            let value = snap.val();
+            value = 'x'
+            dbRefBoard.set(value);
+        })
+        const dbCellRef = [
+            firebase.database().ref(`${key}/cellOne`),
+            firebase.database().ref(`${key}/cellTwo`),
+            firebase.database().ref(`${key}/cellThree`),
+            firebase.database().ref(`${key}/cellFour`),
+            firebase.database().ref(`${key}/cellFive`),
+            firebase.database().ref(`${key}/cellSix`),
+            firebase.database().ref(`${key}/cellSeven`),
+            firebase.database().ref(`${key}/cellEight`),
+            firebase.database().ref(`${key}/cellNine`),
+        ]
+        dbCellRef.forEach((ref) => {
+            ref.once('value', (snap) => {
+                let value = snap.val();
+                value = ''
+                ref.set(value);
+            })
+        })
+    }
+
+    // send game outcome info to firebase db --------------
+    // updateGameOutcome = () => {
+
+    // }
+
+    // send cell data to firebase ---------------------
     updateCellData = (cell) => {
         const key = this.props.match.params.gameKey
         const dbRef = firebase.database().ref(`${key}/${cell}`);
@@ -149,6 +275,7 @@ class GameBoard extends Component {
         });
     }
 
+    // send board class to firebase ---------------------
     updateBoardClass = (stateName) => {
         const key = this.props.match.params.gameKey
         const dbRef = firebase.database().ref(`${key}/${stateName}`);
@@ -184,7 +311,7 @@ class GameBoard extends Component {
                 </div>
                 <div className="winning-message" id="winningMessage">
                     <div data-winning-message-text></div>
-                    <button id="restartButton">Restart</button>
+                    <button id="restartButton" onClick={this.handleRestart}>Restart</button>
                     <Link to="/"></Link>
                 </div>
             </main>

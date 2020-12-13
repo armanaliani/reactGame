@@ -18,7 +18,6 @@ class Home extends Component {
             cellEight: '',
             cellNine: '',
             boardClass: 'x',
-            circleTurn: false,
             gameOutcome: '',
         };
     }
@@ -39,7 +38,6 @@ onStart = (e) => {
         cellEight: state.cellEight,
         cellNine: state.cellNine,
         boardClass: state.boardClass,
-        circleTurn: state.circleTurn,
         gameOutcome: state.gameOutcome,
     };
 
