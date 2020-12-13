@@ -43,13 +43,14 @@ class GameBoard extends Component {
                 boardClass: snapshot.val().boardClass,
                 gameOutcome: snapshot.val().gameOutcome,
             })
+            console.log(this.state)
+            // // check game outcome on load
+            if (this.checkWin(this.state.boardClass)) {
+                this.endGame(false)
+            } else if (this.isDraw()) {
+                this.endGame(true)
+            }
         })
-        // // check game outcome on load
-        if (this.checkWin(this.state.boardClass)) {
-            this.endGame(false)
-        } else if (this.isDraw()) {
-            this.endGame(true)
-        }
     }
 
     // when cell is clicked, place the appropriate marker based on turn, push new turn to firebase, and change cell state to 'x' or 'circle' -------------------------
