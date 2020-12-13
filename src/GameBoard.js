@@ -43,13 +43,21 @@ class GameBoard extends Component {
                 boardClass: snapshot.val().boardClass,
                 gameOutcome: snapshot.val().gameOutcome,
             })
-            console.log(this.state)
+            
             // // check game outcome on load
             if (this.checkWin(this.state.boardClass)) {
                 this.endGame(false)
+                // this.setState({
+                //     gameOutcome: this.state.boardClass
+                // })
+                console.log('winnnnnnner')
             } else if (this.isDraw()) {
                 this.endGame(true)
+                // this.setState({
+                //     gameOutcome: 'draw'
+                // })
             }
+            this.handleRestartMessage()
         })
     }
 
@@ -129,6 +137,7 @@ class GameBoard extends Component {
                 this.setState({
                     gameOutcome: boardClass,
                 })
+                console.log('a winner')
             } else if (this.isDraw()) {
                 this.endGame(true)
                 this.setState({
@@ -137,8 +146,7 @@ class GameBoard extends Component {
             } else {
                 this.switchTurns()
             }
-        }
-        console.log(this.state.gameOutcome)        
+        }      
     }
 
     // switches 'x'/'circle' turn -------------
@@ -229,6 +237,7 @@ class GameBoard extends Component {
         winningMessageElement.classList.add('show')
     }
 
+    // clears board states and calls for clearing database info ------------
     handleRestart = () => {
         // remove cell classes
         const cellElements = document.querySelectorAll('[data-cell]')
@@ -251,8 +260,18 @@ class GameBoard extends Component {
             cellSeven: '',
             cellEight: '',
             cellNine: '',
+            gameOutcome: '',
         })
         this.updateNewGame()
+    }
+
+    // if gameOutcome has been set to '' from restart, remove the game outcome message (for player 2)
+    handleRestartMessage = () => {
+        if (this.state.gameOutcome === '') {
+            // remove game outcome message
+            const winningMessageElement = document.getElementById('winningMessage')
+            winningMessageElement.classList.remove('show')
+        }
     }
 
     // clear database game info for new game-------
