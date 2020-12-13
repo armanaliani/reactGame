@@ -165,16 +165,27 @@ body {
   flex-direction: column;
 }
 
-.winning-message button {
+.messageButtons {
+  display: flex;
+  justify-content: center;
+}
+
+.winning-message button,
+.winning-message .newGame {
   font-size: 3rem;
   background-color: white;
   border: 1px solid black;
   padding: .25em .5em;
   cursor: pointer;
+  text-decoration: none;
+  margin: 0 10px;
+  color: #000;
 }
 
 .winning-message button:hover,
-.winning-message button:focus {
+.winning-message button:focus,
+.winning-message .newGame:hover,
+.winning-message .newGame:focus {
   background-color:black;
   border-color: white;
   color: white;

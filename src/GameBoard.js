@@ -44,6 +44,12 @@ class GameBoard extends Component {
                 gameOutcome: snapshot.val().gameOutcome,
             })
         })
+        // // check game outcome on load
+        if (this.checkWin(this.state.boardClass)) {
+            this.endGame(false)
+        } else if (this.isDraw()) {
+            this.endGame(true)
+        }
     }
 
     // when cell is clicked, place the appropriate marker based on turn, push new turn to firebase, and change cell state to 'x' or 'circle' -------------------------
@@ -57,7 +63,6 @@ class GameBoard extends Component {
         const cellClassArr = cellClasses.split(' ');
         const cellNumberArr = cellClassArr.slice(1,2)
         const cellStateClass = cellNumberArr.toString();
-        console.log(cellStateClass)
 
         // making sure there isnt already a marker in the chosen cell-------
         if ((!cellClassArr.includes('x')) && (!cellClassArr.includes('circle'))) {
@@ -120,6 +125,9 @@ class GameBoard extends Component {
 
             if (this.checkWin(boardClass)) {
                 this.endGame(false)
+                this.setState({
+                    gameOutcome: boardClass,
+                })
             } else if (this.isDraw()) {
                 this.endGame(true)
                 this.setState({
@@ -128,7 +136,8 @@ class GameBoard extends Component {
             } else {
                 this.switchTurns()
             }
-        }        
+        }
+        console.log(this.state.gameOutcome)        
     }
 
     // switches 'x'/'circle' turn -------------
@@ -185,13 +194,35 @@ class GameBoard extends Component {
         const boardClass = this.state.boardClass
         const winningMessageElement = document.getElementById('winningMessage')
         const winningMessageTextElement = document.querySelector('[data-winning-message-text]')
-        if (draw) {
+        if ((draw) || (this.state.gameOutcome === 'draw')) {
             winningMessageTextElement.innerText = "Draw!"
+            if (this.state.gameOutcome === '') {
+                this.setState({
+                    gameOutcome: 'draw'
+                })
+            }
+            this.updateGameOutcome('draw')
+        } else if (this.state.gameOutcome === 'x') {
+            winningMessageTextElement.innerText = `X's Win!`
+        } else if (this.state.gameOutcome === 'circle') {
+            winningMessageTextElement.innerText = `O's Win!`
         } else {
             if (boardClass === 'x') {
                 winningMessageTextElement.innerText = `X's Win!`
+                if (this.state.gameOutcome === '') {
+                    this.setState({
+                        gameOutcome: 'x'
+                    })
+                }
+                this.updateGameOutcome('x')
             } else if (boardClass === 'circle') {
                 winningMessageTextElement.innerText = `O's Win!`
+                if (this.state.gameOutcome === '') {
+                    this.setState({
+                        gameOutcome: 'circle'
+                    })
+                }
+                this.updateGameOutcome('circle')
             }
         }
         winningMessageElement.classList.add('show')
@@ -233,6 +264,7 @@ class GameBoard extends Component {
             value = 'x'
             dbRefBoard.set(value);
         })
+        // set cell classes and outcome back to ''
         const dbCellRef = [
             firebase.database().ref(`${key}/cellOne`),
             firebase.database().ref(`${key}/cellTwo`),
@@ -243,6 +275,7 @@ class GameBoard extends Component {
             firebase.database().ref(`${key}/cellSeven`),
             firebase.database().ref(`${key}/cellEight`),
             firebase.database().ref(`${key}/cellNine`),
+            firebase.database().ref(`${key}/gameOutcome`),
         ]
         dbCellRef.forEach((ref) => {
             ref.once('value', (snap) => {
@@ -254,9 +287,15 @@ class GameBoard extends Component {
     }
 
     // send game outcome info to firebase db --------------
-    // updateGameOutcome = () => {
-
-    // }
+    updateGameOutcome = (symbol) => {
+        const key = this.props.match.params.gameKey
+        const dbRef = firebase.database().ref(`${key}/gameOutcome`);
+        dbRef.once("value", (snap) => {
+            let value = snap.val();
+            value = symbol
+            dbRef.set(value);
+        });
+    }
 
     // send cell data to firebase ---------------------
     updateCellData = (cell) => {
@@ -311,8 +350,10 @@ class GameBoard extends Component {
                 </div>
                 <div className="winning-message" id="winningMessage">
                     <div data-winning-message-text></div>
-                    <button id="restartButton" onClick={this.handleRestart}>Restart</button>
-                    <Link to="/"></Link>
+                    <div className="messageButtons">
+                        <button id="restartButton" onClick={this.handleRestart}>Restart</button>
+                        <Link to="/" className="newGame">New Game</Link>
+                    </div>
                 </div>
             </main>
         )
