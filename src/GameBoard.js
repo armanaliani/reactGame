@@ -63,47 +63,47 @@ class GameBoard extends Component {
             this.setState({
                 cellOne: boardClass
             })
-            this.updateData('cellOne')
+            this.updateCellData('cellOne')
         } else if (cellStateClass === 'cellTwo') {
             this.setState({
                 cellTwo: boardClass
             })
-            this.updateData('cellTwo')
+            this.updateCellData('cellTwo')
         } else if (cellStateClass === 'cellThree') {
             this.setState({
                 cellThree: boardClass
             })
-            this.updateData('cellThree')
+            this.updateCellData('cellThree')
         } else if (cellStateClass === 'cellFour') {
             this.setState({
                 cellFour: boardClass
             })
-            this.updateData('cellFour')
+            this.updateCellData('cellFour')
         } else if (cellStateClass === 'cellFive') {
             this.setState({
                 cellFive: boardClass
             })
-            this.updateData('cellFive')
+            this.updateCellData('cellFive')
         } else if (cellStateClass === 'cellSix') {
             this.setState({
                 cellSix: boardClass
             })
-            this.updateData('cellSix')
+            this.updateCellData('cellSix')
         } else if (cellStateClass === 'cellSeven') {
             this.setState({
                 cellSeven: boardClass
             })
-            this.updateData('cellSeven')
+            this.updateCellData('cellSeven')
         } else if (cellStateClass === 'cellEight') {
             this.setState({
                 cellEight: boardClass
             })
-            this.updateData('cellEight')
+            this.updateCellData('cellEight')
         } else if (cellStateClass === 'cellNine') {
             this.setState({
                 cellNine: boardClass
             })
-            this.updateData('cellNine')
+            this.updateCellData('cellNine')
         }
 
         // switch board class
@@ -111,17 +111,19 @@ class GameBoard extends Component {
             this.setState({
                 boardClass: 'circle'
             })
+            this.updateBoardClass('boardClass')
         } else if (boardClass === 'circle') {
             this.setState({
                 boardClass: 'x'
             })
+            this.updateBoardClass('boardClass')
         }
         
         // switches player turn
-        const circleTurn = state.circleTurn
-        this.setState({
-            circleTurn: !circleTurn
-        })
+        // const circleTurn = state.circleTurn
+        // this.setState({
+        //     circleTurn: !circleTurn
+        // })
 
         // places X or O in cell spot
         placeMark(cell, boardClass)
@@ -131,7 +133,7 @@ class GameBoard extends Component {
     }
 
     // push cell data to firebase ---------------------
-    updateData = (cell) => {
+    updateCellData = (cell) => {
         const key = this.props.match.params.gameKey
         const dbRef = firebase.database().ref(`${key}/${cell}`);
         const boardClass = this.state.boardClass
@@ -142,6 +144,22 @@ class GameBoard extends Component {
                 dbRef.set(value);
             } else if (boardClass === 'circle') {
                 value = 'circle'
+                dbRef.set(value);
+            }
+        });
+    }
+
+    updateBoardClass = (stateName) => {
+        const key = this.props.match.params.gameKey
+        const dbRef = firebase.database().ref(`${key}/${stateName}`);
+        const boardClass = this.state.boardClass
+        dbRef.once("value", (snap) => {
+            let value = snap.val();
+            if (boardClass === 'x') {
+                value = 'circle'
+                dbRef.set(value);
+            } else if (boardClass === 'circle') {
+                value = 'x'
                 dbRef.set(value);
             }
         });
