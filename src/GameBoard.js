@@ -47,17 +47,11 @@ class GameBoard extends Component {
             // // check game outcome on load
             if (this.checkWin(this.state.boardClass)) {
                 this.endGame(false)
-                // this.setState({
-                //     gameOutcome: this.state.boardClass
-                // })
-                console.log('winnnnnnner')
             } else if (this.isDraw()) {
                 this.endGame(true)
-                // this.setState({
-                //     gameOutcome: 'draw'
-                // })
             }
             this.handleRestartMessage()
+            // second game instance is somehow mounting and pushing data and overwriting outcomes
         })
     }
 
@@ -137,7 +131,6 @@ class GameBoard extends Component {
                 this.setState({
                     gameOutcome: boardClass,
                 })
-                console.log('a winner')
             } else if (this.isDraw()) {
                 this.endGame(true)
                 this.setState({
@@ -192,10 +185,13 @@ class GameBoard extends Component {
 
     // check to see if all cells have a className of 'x' or 'circle'
     isDraw = () => {
-        const cellElements = document.querySelectorAll('[data-cell]')
-        return [...cellElements].every(cell => {
-            return cell.classList.contains('x') || cell.classList.contains('circle')
-        })
+        // extra layer of error handling security for when last cell is also the game winning cell
+        // if (!this.checkWin()) {
+            const cellElements = document.querySelectorAll('[data-cell]')
+            return [...cellElements].every(cell => {
+                return cell.classList.contains('x') || cell.classList.contains('circle')
+            })
+        // }
     }
 
     // display game outcome
@@ -203,18 +199,20 @@ class GameBoard extends Component {
         const boardClass = this.state.boardClass
         const winningMessageElement = document.getElementById('winningMessage')
         const winningMessageTextElement = document.querySelector('[data-winning-message-text]')
-        if ((draw) || (this.state.gameOutcome === 'draw')) {
+
+        // conditionals checking for an existing game outcome (player 2 situation) first, then checking for a draw, then a local win...avoids a draw outcome re-mount when the final cell is also the winning cell
+        if (this.state.gameOutcome === 'x') {
+            winningMessageTextElement.innerText = `X's Win!`
+        } else if (this.state.gameOutcome === 'circle') {
+            winningMessageTextElement.innerText = `O's Win!`
+        } else if ((draw) || (this.state.gameOutcome === 'draw')) {
             winningMessageTextElement.innerText = "Draw!"
-            if (this.state.gameOutcome === '') {
+            if ((!this.state.gameOutcome === 'x') || !this.state.gameOutcome === 'circle') {
                 this.setState({
                     gameOutcome: 'draw'
                 })
             }
             this.updateGameOutcome('draw')
-        } else if (this.state.gameOutcome === 'x') {
-            winningMessageTextElement.innerText = `X's Win!`
-        } else if (this.state.gameOutcome === 'circle') {
-            winningMessageTextElement.innerText = `O's Win!`
         } else {
             if (boardClass === 'x') {
                 winningMessageTextElement.innerText = `X's Win!`
