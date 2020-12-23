@@ -48,7 +48,11 @@ class GameBoard extends Component {
             if (this.checkWin(this.state.boardClass)) {
                 this.endGame(false)
             } else if (this.isDraw()) {
-                this.endGame(true)
+                // calls to a second version of endGame that prevents the gameoutcome db override issue on draw game outcomes
+                this.endGamePlayerTwo(true)
+                this.setState({
+                    gameOutcome: 'draw'
+                })
             }
             this.handleRestartMessage()
             // second game instance is somehow mounting and pushing data and overwriting outcomes
@@ -199,22 +203,20 @@ class GameBoard extends Component {
         const boardClass = this.state.boardClass
         const winningMessageElement = document.getElementById('winningMessage')
         const winningMessageTextElement = document.querySelector('[data-winning-message-text]')
-
-        // conditionals checking for an existing game outcome (player 2 situation) first, then checking for a draw, then a local win...avoids a draw outcome re-mount when the final cell is also the winning cell
         if (this.state.gameOutcome === 'x') {
             winningMessageTextElement.innerText = `X's Win!`
         } else if (this.state.gameOutcome === 'circle') {
             winningMessageTextElement.innerText = `O's Win!`
-        } else if ((draw) || (this.state.gameOutcome === 'draw')) {
-            winningMessageTextElement.innerText = "Draw!"
-            if ((!this.state.gameOutcome === 'x') || !this.state.gameOutcome === 'circle') {
-                this.setState({
-                    gameOutcome: 'draw'
-                })
-            }
-            this.updateGameOutcome('draw')
         } else {
-            if (boardClass === 'x') {
+            if ((draw) || (this.state.gameOutcome === 'draw')) {
+                winningMessageTextElement.innerText = "Draw!"
+                if (this.state.gameOutcome === '') {
+                    this.setState({
+                        gameOutcome: 'draw'
+                    })
+                }
+                this.updateGameOutcome('draw')
+            } else if (boardClass === 'x') {
                 winningMessageTextElement.innerText = `X's Win!`
                 if (this.state.gameOutcome === '') {
                     this.setState({
@@ -231,6 +233,22 @@ class GameBoard extends Component {
                 }
                 this.updateGameOutcome('circle')
             }
+        }
+        winningMessageElement.classList.add('show')
+    }
+
+    // a version of the endgame function specifically to be called by player 2 pulling data from db, to avoid multiple setstates and db updates
+    endGamePlayerTwo = (draw) => {
+        const boardClass = this.state.boardClass
+        const winningMessageElement = document.getElementById('winningMessage')
+        const winningMessageTextElement = document.querySelector('[data-winning-message-text]')
+        if ((draw) || (this.state.gameOutcome === 'draw')) {
+                winningMessageTextElement.innerText = "Draw!"
+                if (this.state.gameOutcome === '') {
+                    this.setState({
+                        gameOutcome: 'draw'
+                    })
+                }
         }
         winningMessageElement.classList.add('show')
     }
@@ -308,6 +326,7 @@ class GameBoard extends Component {
     updateGameOutcome = (symbol) => {
         const key = this.props.match.params.gameKey
         const dbRef = firebase.database().ref(`${key}/gameOutcome`);
+        // issue with 2 clients, 
         dbRef.once("value", (snap) => {
             let value = snap.val();
             value = symbol
