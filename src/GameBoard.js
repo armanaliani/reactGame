@@ -242,7 +242,13 @@ class GameBoard extends Component {
         const boardClass = this.state.boardClass
         const winningMessageElement = document.getElementById('winningMessage')
         const winningMessageTextElement = document.querySelector('[data-winning-message-text]')
-        if ((draw) || (this.state.gameOutcome === 'draw')) {
+        if (this.state.gameOutcome === 'x') {
+            winningMessageTextElement.innerText = `X's Win!`
+        } else if (this.state.gameOutcome === 'circle') {
+            winningMessageTextElement.innerText = `O's Win!`
+        } 
+        // including x and o win conditions so that a final x or o placement win does not get triggered as a draw
+        else if ((draw) || (this.state.gameOutcome === 'draw')) {
                 winningMessageTextElement.innerText = "Draw!"
                 if (this.state.gameOutcome === '') {
                     this.setState({
