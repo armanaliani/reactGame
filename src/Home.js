@@ -19,6 +19,8 @@ class Home extends Component {
             cellNine: '',
             boardClass: 'x',
             gameOutcome: '',
+            playerOneJoined:'',
+            playerTwoJoined:'',
         };
     }
 
@@ -39,6 +41,8 @@ onStart = (e) => {
         cellNine: state.cellNine,
         boardClass: state.boardClass,
         gameOutcome: state.gameOutcome,
+        playerOneJoined: state.playerOneJoined,
+        playerTwoJoined: state.playerTwoJoined,
     };
 
     const {key} = dbRef.push(gameObj);

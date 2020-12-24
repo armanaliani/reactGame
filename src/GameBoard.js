@@ -19,6 +19,8 @@ class GameBoard extends Component {
             cellNine: '',
             boardClass: 'x',
             gameOutcome: '',
+            playerOneJoined:'',
+            playerTwoJoined:'',
         }
     }
 
@@ -42,6 +44,8 @@ class GameBoard extends Component {
                 cellNine: snapshot.val().cellNine,
                 boardClass: snapshot.val().boardClass,
                 gameOutcome: snapshot.val().gameOutcome,
+                playerOneJoined:snapshot.val().playerOneJoined,
+                playerTwoJoined:snapshot.val().playerTwoJoined,
             })
             
             // // check game outcome on load
@@ -57,6 +61,7 @@ class GameBoard extends Component {
             this.handleRestartMessage()
             // second game instance is somehow mounting and pushing data and overwriting outcomes
         })
+
     }
 
     // when cell is clicked, place the appropriate marker based on turn, push new turn to firebase, and change cell state to 'x' or 'circle' -------------------------
@@ -152,12 +157,45 @@ class GameBoard extends Component {
             // update placeMark() function to check to see which player param is in local storage, and only allow the player to place their specific mark
             // before it can assign a player x or player o param to loca storage, it must also check that there is no player 1 or player 2 object already in place in the database, or else the player x and player o local storage params have already been issued on other devices
 
+        // assigning x and o signs to players, and not allowing more than 2 players in a single game
+        // if (state.playerOneJoined && state.playerTwoJoined === '') {
+        //     // if both states are missing;
+        //         // push player x to local storage 
+        //         //  push player One joined to db
+        //         //  run placemark for boardclass x if boardclass is also x
+        // } else if ((state.playerOneJoined === 'yes') && (state.playerTwoJoined === '')) {
+        //     // if player one has joined but player 2 has not;
+        //         // push player o to local storage 
+        //         //  push player Two joined to db
+        //         //  run placemark for boardclass o if boardclass is also circle
+        // } else (state.playerOneJoined && state.playerTwoJoined === 'yes') {
+        //     // if both players have joined on db, check for local storage to verify which player the user currently is one of the original two players
+        //     // if local storage has either player x or player o param;
+        //         // run placemark for that params boardclass
+        //     // ----------
+        //     // if local storage has neither player x or player o params;
+        //         // dont run anything (should there be an error handling message for the user?)
+        // }
+        const key = this.props.match.params.gameKey
+        const localStorageItem = 'ticTacToePlayers'
+        const localGameObject = {'playerOne': 'no', 'playerTwo': 'no'}
+        
+        
+
+        updateStorage(key);
+        function updateStorage(key) {
+            const ticTacToeStorage = window.localStorage.getItem(localStorageItem);
+            const ticTacToeGamesArray = [];
+            if (ticTacToeStorage) {
+                ticTacToeGamesArray.push(...ticTacToeStorage.split(","));
+            }
+            ticTacToeGamesArray.push(key[localGameObject]);
+            window.localStorage.setItem(localStorageItem, ticTacToeGamesArray.join(","));
+
+            console.log(window.localStorage)
+        }
         // ----------------
         // on endgame; clear local storages
-        
-        // to prevent more than two players on a single game
-            // when player x and player o params are sent to local storage, also send a player 1 and player 2 param to db
-            // on component mount, and retreiving db data, if the player 1 and player 2 params are present in the database, then the local storage must be checked for either a player x or player o param. If either param is there, then the user is one of the original two players. If neither param is there, then the user is the 3rd+ player to join and will not be allowed to play ----------------- how to enforce the ability to play?
     }
 
     // switches 'x'/'circle' turn -------------
@@ -214,6 +252,9 @@ class GameBoard extends Component {
 
     // display game outcome
     endGame = (draw) => {
+        // -------------
+        // clear local storage
+        // -------------
         const boardClass = this.state.boardClass
         const winningMessageElement = document.getElementById('winningMessage')
         const winningMessageTextElement = document.querySelector('[data-winning-message-text]')
@@ -275,6 +316,10 @@ class GameBoard extends Component {
 
     // clears board states and calls for clearing database info ------------
     handleRestart = () => {
+        // --------------
+        // make sure user who clicks restart is one of the two players that has either player x or player o in local storage
+        // --------------
+
         // remove cell classes
         const cellElements = document.querySelectorAll('[data-cell]')
         cellElements.forEach(cell => {
