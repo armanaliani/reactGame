@@ -143,7 +143,21 @@ class GameBoard extends Component {
             } else {
                 this.switchTurns()
             }
-        }      
+        }    
+        
+        // create and add function that sends a param to local storage to set one player as player x and the other player as player 0
+        // local storage logic; 
+            // on first turn, adds 'player x' param to local storage
+            // checks to see if player x param exists in local storage, if not, gives a player 0 param to local storage. 
+            // update placeMark() function to check to see which player param is in local storage, and only allow the player to place their specific mark
+            // before it can assign a player x or player o param to loca storage, it must also check that there is no player 1 or player 2 object already in place in the database, or else the player x and player o local storage params have already been issued on other devices
+
+        // ----------------
+        // on endgame; clear local storages
+        
+        // to prevent more than two players on a single game
+            // when player x and player o params are sent to local storage, also send a player 1 and player 2 param to db
+            // on component mount, and retreiving db data, if the player 1 and player 2 params are present in the database, then the local storage must be checked for either a player x or player o param. If either param is there, then the user is one of the original two players. If neither param is there, then the user is the 3rd+ player to join and will not be allowed to play ----------------- how to enforce the ability to play?
     }
 
     // switches 'x'/'circle' turn -------------
