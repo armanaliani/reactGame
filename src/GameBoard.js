@@ -153,7 +153,7 @@ class GameBoard extends Component {
         // create and add function that sends a param to local storage to set one player as player x and the other player as player 0
         // local storage logic; 
             // on first turn, adds 'player x' param to local storage
-            // checks to see if player x param exists in local storage, if not, gives a player 0 param to local storage. 
+            // checks to see if player x param exists in local storage, if not, gives a player o param to local storage. 
             // update placeMark() function to check to see which player param is in local storage, and only allow the player to place their specific mark
             // before it can assign a player x or player o param to loca storage, it must also check that there is no player 1 or player 2 object already in place in the database, or else the player x and player o local storage params have already been issued on other devices
 
@@ -176,26 +176,44 @@ class GameBoard extends Component {
         //     // if local storage has neither player x or player o params;
         //         // dont run anything (should there be an error handling message for the user?)
         // }
+
         const key = this.props.match.params.gameKey
-        const localStorageItem = 'ticTacToePlayers'
-        const localGameObject = {'playerOne': 'no', 'playerTwo': 'no'}
-        
-        
-
-        updateStorage(key);
-        function updateStorage(key) {
-            const ticTacToeStorage = window.localStorage.getItem(localStorageItem);
-            const ticTacToeGamesArray = [];
-            if (ticTacToeStorage) {
-                ticTacToeGamesArray.push(...ticTacToeStorage.split(","));
-            }
-            ticTacToeGamesArray.push(key[localGameObject]);
-            window.localStorage.setItem(localStorageItem, ticTacToeGamesArray.join(","));
-
-            console.log(window.localStorage)
+        const gameObj = [
+            state.cellOne,
+            state.cellTwo,
+            state.cellThree,
+            state.cellFour,
+            state.cellFive,
+            state.cellSix,
+            state.cellSeven,
+            state.cellEight,
+            state.cellNine,
+        ];
+        console.log(gameObj)
+        // makes sure board is clear before pushing gameobject to local storage, ensures its only pushed once per game
+        if ((!gameObj.includes('x')) && (!gameObj.includes('circle'))) {
+            this.updateStorage(key);
+            console.log('u good')
         }
         // ----------------
         // on endgame; clear local storages
+    }
+    updateStorage(key) {
+        // figure out a way to send the local storage param just one time per game, need to be able to access by key
+        const localStorageItem = key
+        const ticTacToeStorage = window.localStorage.getItem(localStorageItem);
+        const ticTacToeGamesArray = [];
+        if (ticTacToeStorage) {
+            ticTacToeGamesArray.push(...ticTacToeStorage.split(","));
+        }
+        const localGameObject = {
+                'playerOne': 'no', 
+                'playerTwo': 'no'
+        }
+        ticTacToeGamesArray.push(localGameObject,JSON.stringify(localGameObject));
+        window.localStorage.setItem(localStorageItem, ticTacToeGamesArray.join(","));
+        
+    console.log(window.localStorage)
     }
 
     // switches 'x'/'circle' turn -------------
@@ -252,9 +270,6 @@ class GameBoard extends Component {
 
     // display game outcome
     endGame = (draw) => {
-        // -------------
-        // clear local storage
-        // -------------
         const boardClass = this.state.boardClass
         const winningMessageElement = document.getElementById('winningMessage')
         const winningMessageTextElement = document.querySelector('[data-winning-message-text]')
@@ -290,6 +305,15 @@ class GameBoard extends Component {
             }
         }
         winningMessageElement.classList.add('show')
+
+        // -------------
+        // clear local storage
+        // -------------
+        const key = this.props.match.params.gameKey
+        clearStorage(key)
+        function clearStorage(key) {
+            window.localStorage.removeItem(key)
+        }
     }
 
     // a version of the endgame function specifically to be called by player 2 pulling data from db, to avoid multiple setstates and db updates
@@ -454,7 +478,7 @@ class GameBoard extends Component {
                     <div data-winning-message-text></div>
                     <div className="messageButtons">
                         <button id="restartButton" onClick={this.handleRestart}>Restart</button>
-                        <Link to="/" className="newGame">New Game</Link>
+                        <Link to="/" className="newGame" onClick={this.handleRestart}>New Game</Link>
                     </div>
                 </div>
             </main>
