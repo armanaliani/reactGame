@@ -161,22 +161,39 @@ class GameBoard extends Component {
         if ((state.playerOneJoined === '' ) && (state.playerTwoJoined === '')) {
             // if both states are missing;
                 // push player x to local storage 
+                // const profile = JSON.parse(localStorage.getItem('profile'));
+                // Object.keys(updatedData).forEach((key) => {
+                //     profile[key] = updatedData[key];
+                // });
+                // localStorage.setItem('profile', JSON.stringify(profile));
                 //  push player One joined to db
                 this.updatePlayerStatus('playerOneJoined', 'yes')
-                //  run placemark for boardclass x if boardclass is also x
+                // set state player one joined
                 this.setState({
                     playerOneJoined: 'yes'
                 })
+                //  run placemark for boardclass x if boardclass is also x
+                if (state.boardClass === 'x') {
+                    this.placeMark(cell, boardClass)
+                    console.log('placed x')
+                }
+                // test
                 console.log('both no')
         } else if ((state.playerOneJoined === 'yes') && (state.playerTwoJoined === '')) {
             // if player one has joined but player 2 has not;
                 // push player o to local storage 
                 //  push player Two joined to db
                 this.updatePlayerStatus('playerTwoJoined', 'yes')
-                //  run placemark for boardclass o if boardclass is also circle
+                // set state player two joined
                 this.setState({
                     playerTwoJoined: 'yes'
                 })
+                //  run placemark for boardclass o if boardclass is also circle
+                if (state.boardClass === 'x') {
+                    this.placeMark(cell, boardClass)
+                    console.log('placed o')
+                }
+                // test 
                 console.log('player one yes, player two no')
         } else if (state.playerOneJoined && state.playerTwoJoined === 'yes') {
             // if both players have joined on db, check for local storage to verify which player the user currently is one of the original two players
@@ -208,6 +225,11 @@ class GameBoard extends Component {
         }
         // ----------------
         // on endgame; clear local storages
+    }
+
+    // place x/o mark on board
+    placeMark(cell, currentClass) {
+        cell.classList.add(currentClass)
     }
 
     // adds game to local storage
