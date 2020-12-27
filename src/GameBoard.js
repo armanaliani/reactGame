@@ -158,24 +158,35 @@ class GameBoard extends Component {
             // before it can assign a player x or player o param to loca storage, it must also check that there is no player 1 or player 2 object already in place in the database, or else the player x and player o local storage params have already been issued on other devices
 
         // assigning x and o signs to players, and not allowing more than 2 players in a single game
-        // if (state.playerOneJoined && state.playerTwoJoined === '') {
-        //     // if both states are missing;
-        //         // push player x to local storage 
-        //         //  push player One joined to db
-        //         //  run placemark for boardclass x if boardclass is also x
-        // } else if ((state.playerOneJoined === 'yes') && (state.playerTwoJoined === '')) {
-        //     // if player one has joined but player 2 has not;
-        //         // push player o to local storage 
-        //         //  push player Two joined to db
-        //         //  run placemark for boardclass o if boardclass is also circle
-        // } else (state.playerOneJoined && state.playerTwoJoined === 'yes') {
-        //     // if both players have joined on db, check for local storage to verify which player the user currently is one of the original two players
-        //     // if local storage has either player x or player o param;
-        //         // run placemark for that params boardclass
-        //     // ----------
-        //     // if local storage has neither player x or player o params;
-        //         // dont run anything (should there be an error handling message for the user?)
-        // }
+        if ((state.playerOneJoined === '' ) && (state.playerTwoJoined === '')) {
+            // if both states are missing;
+                // push player x to local storage 
+                //  push player One joined to db
+                this.updatePlayerStatus('playerOneJoined', 'yes')
+                //  run placemark for boardclass x if boardclass is also x
+                this.setState({
+                    playerOneJoined: 'yes'
+                })
+                console.log('both no')
+        } else if ((state.playerOneJoined === 'yes') && (state.playerTwoJoined === '')) {
+            // if player one has joined but player 2 has not;
+                // push player o to local storage 
+                //  push player Two joined to db
+                this.updatePlayerStatus('playerTwoJoined', 'yes')
+                //  run placemark for boardclass o if boardclass is also circle
+                this.setState({
+                    playerTwoJoined: 'yes'
+                })
+                console.log('player one yes, player two no')
+        } else if (state.playerOneJoined && state.playerTwoJoined === 'yes') {
+            // if both players have joined on db, check for local storage to verify which player the user currently is one of the original two players
+            // if local storage has either player x or player o param;
+                // run placemark for that params boardclass
+            // ----------
+            // if local storage has neither player x or player o params;
+                // dont run anything (should there be an error handling message for the user?)
+                console.log('both players yes')
+        }
 
         const key = this.props.match.params.gameKey
         const gameObj = [
@@ -189,7 +200,7 @@ class GameBoard extends Component {
             state.cellEight,
             state.cellNine,
         ];
-        console.log(gameObj)
+        // console.log(gameObj)
         // makes sure board is clear before pushing gameobject to local storage, ensures its only pushed once per game
         if ((!gameObj.includes('x')) && (!gameObj.includes('circle'))) {
             this.updateStorage(key);
@@ -198,6 +209,8 @@ class GameBoard extends Component {
         // ----------------
         // on endgame; clear local storages
     }
+
+    // adds game to local storage
     updateStorage(key) {
         // figure out a way to send the local storage param just one time per game, need to be able to access by key
         const localStorageItem = key
@@ -213,7 +226,7 @@ class GameBoard extends Component {
         ticTacToeGamesArray.push(localGameObject,JSON.stringify(localGameObject));
         window.localStorage.setItem(localStorageItem, ticTacToeGamesArray.join(","));
         
-    console.log(window.localStorage)
+    // console.log(window.localStorage)
     }
 
     // switches 'x'/'circle' turn -------------
@@ -367,6 +380,7 @@ class GameBoard extends Component {
             cellNine: '',
             gameOutcome: '',
         })
+        // clears db
         this.updateNewGame()
     }
 
@@ -401,6 +415,8 @@ class GameBoard extends Component {
             firebase.database().ref(`${key}/cellEight`),
             firebase.database().ref(`${key}/cellNine`),
             firebase.database().ref(`${key}/gameOutcome`),
+            firebase.database().ref(`${key}/playerOneJoined`),
+            firebase.database().ref(`${key}/playerTwoJoined`),
         ]
         dbCellRef.forEach((ref) => {
             ref.once('value', (snap) => {
@@ -438,6 +454,17 @@ class GameBoard extends Component {
                 dbRef.set(value);
             }
         });
+    }
+
+    // send player one/two joined game to db ---------------
+    updatePlayerStatus = (player, status) => {
+        const key = this.props.match.params.gameKey
+        const dbRef = firebase.database().ref(`${key}/${player}`);
+        dbRef.once("value", (snap) => {
+            let value = snap.val();
+            value = status
+            dbRef.set(value);
+        })
     }
 
     // send board class to firebase ---------------------
