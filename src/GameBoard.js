@@ -157,15 +157,13 @@ class GameBoard extends Component {
             // update placeMark() function to check to see which player param is in local storage, and only allow the player to place their specific mark
             // before it can assign a player x or player o param to loca storage, it must also check that there is no player 1 or player 2 object already in place in the database, or else the player x and player o local storage params have already been issued on other devices
 
+        const key = this.props.match.params.gameKey
         // assigning x and o signs to players, and not allowing more than 2 players in a single game
         if ((state.playerOneJoined === '' ) && (state.playerTwoJoined === '')) {
             // if both states are missing;
-                // push player x to local storage 
-                // const profile = JSON.parse(localStorage.getItem('profile'));
-                // Object.keys(updatedData).forEach((key) => {
-                //     profile[key] = updatedData[key];
-                // });
-                // localStorage.setItem('profile', JSON.stringify(profile));
+                // push 'playerX' to local storage 
+                this.setStorage(key, 'playerX');
+                console.log(window.sessionStorage)
                 //  push player One joined to db
                 this.updatePlayerStatus('playerOneJoined', 'yes')
                 // set state player one joined
@@ -181,7 +179,9 @@ class GameBoard extends Component {
                 console.log('both no')
         } else if ((state.playerOneJoined === 'yes') && (state.playerTwoJoined === '')) {
             // if player one has joined but player 2 has not;
-                // push player o to local storage 
+                // push 'playerO' to local storage 
+                this.setStorage(key, 'playerO');
+                console.log(window.sessionStorage)
                 //  push player Two joined to db
                 this.updatePlayerStatus('playerTwoJoined', 'yes')
                 // set state player two joined
@@ -205,7 +205,7 @@ class GameBoard extends Component {
                 console.log('both players yes')
         }
 
-        const key = this.props.match.params.gameKey
+        // const key = this.props.match.params.gameKey
         const gameObj = [
             state.cellOne,
             state.cellTwo,
@@ -220,7 +220,7 @@ class GameBoard extends Component {
         // console.log(gameObj)
         // makes sure board is clear before pushing gameobject to local storage, ensures its only pushed once per game
         if ((!gameObj.includes('x')) && (!gameObj.includes('circle'))) {
-            this.updateStorage(key);
+            this.setStorage(key, '');
             console.log('u good')
         }
         // ----------------
@@ -233,22 +233,15 @@ class GameBoard extends Component {
     }
 
     // adds game to local storage
-    updateStorage(key) {
-        // figure out a way to send the local storage param just one time per game, need to be able to access by key
-        const localStorageItem = key
-        const ticTacToeStorage = window.localStorage.getItem(localStorageItem);
-        const ticTacToeGamesArray = [];
-        if (ticTacToeStorage) {
-            ticTacToeGamesArray.push(...ticTacToeStorage.split(","));
-        }
-        const localGameObject = {
-                'playerOne': 'no', 
-                'playerTwo': 'no'
-        }
-        ticTacToeGamesArray.push(localGameObject,JSON.stringify(localGameObject));
-        window.localStorage.setItem(localStorageItem, ticTacToeGamesArray.join(","));
+    setStorage(key, status) {
+        const sessionStorageItem = key
+        const localGameObject = [
+                // will hold either 'playerX' or 'playerO'
+                status
+        ]
+        window.sessionStorage.setItem((sessionStorageItem, JSON.stringify(sessionStorageItem)), localGameObject.join(","));
         
-    // console.log(window.localStorage)
+    console.log(window.sessionStorage)
     }
 
     // switches 'x'/'circle' turn -------------
@@ -347,7 +340,7 @@ class GameBoard extends Component {
         const key = this.props.match.params.gameKey
         clearStorage(key)
         function clearStorage(key) {
-            window.localStorage.removeItem(key)
+            window.sessionStorage.removeItem(key)
         }
     }
 
