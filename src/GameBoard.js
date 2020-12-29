@@ -149,71 +149,9 @@ class GameBoard extends Component {
             } else {
                 this.switchTurns()
             }
-        }    
-        
-        // create and add function that sends a param to local storage to set one player as player x and the other player as player 0
-        // local storage logic; 
-            // on first turn, adds 'player x' param to local storage
-            // checks to see if player x param exists in local storage, if not, gives a player o param to local storage. 
-            // update placeMark() function to check to see which player param is in local storage, and only allow the player to place their specific mark
-            // before it can assign a player x or player o param to loca storage, it must also check that there is no player 1 or player 2 object already in place in the database, or else the player x and player o local storage params have already been issued on other devices
-
-        const key = this.props.match.params.gameKey
-        // assigning x and o signs to players, and not allowing more than 2 players in a single game
-        if ((state.playerOneJoined === '' ) && (state.playerTwoJoined === '')) {
-        // if both states are missing;
-            // push 'playerX' to local storage 
-            this.setStorage(key, 'playerX');
-            console.log(window.sessionStorage)
-            //  push player One joined to db
-            this.updatePlayerStatus('playerOneJoined', 'yes')
-            // set state player one joined
-            this.setState({
-                playerOneJoined: 'yes'
-            })
-            //  run placemark for boardclass x if boardclass is also x
-            if (state.boardClass === 'x') {
-                this.placeMark(cell, boardClass)
-                console.log('placed x')
-            }
-            // test
-            console.log('both no')
-        } else if ((state.playerOneJoined === 'yes') && (state.playerTwoJoined === '')) {
-        // if player one has joined but player 2 has not;
-            // push 'playerO' to local storage 
-            this.setStorage(key, 'playerO');
-            console.log(window.sessionStorage)
-            //  push player Two joined to db
-            this.updatePlayerStatus('playerTwoJoined', 'yes')
-            // set state player two joined
-            this.setState({
-                playerTwoJoined: 'yes'
-            })
-            //  run placemark for boardclass o if boardclass is also circle
-            if (state.boardClass === 'o') {
-                this.placeMark(cell, boardClass)
-                console.log('placed o')
-            }
-            // test 
-            console.log('player one yes, player two no')
-        } else if (state.playerOneJoined && state.playerTwoJoined === 'yes') {
-            // if both players have joined on db, check for local storage to verify which player the user currently is one of the original two players
-            const storageThing = JSON.parse(window.sessionStorage.getItem(key, JSON.stringify(key))) 
-            console.log(storageThing, 'the storage item')
-
-            if ((storageThing === 'playerX') || (storageThing === 'PlayerO')) {
-            // if local storage has either player x or player o param;
-                // run placemark for that params boardclass
-                console.log('verified player')
-            } else if ((!storageThing === 'playerX') && (!storageThing === 'PlayerO')) {
-            // if local storage has neither player x or player o params;
-                // dont run anything (should there be an error handling message for the user?)
-                console.log('who are you')
-            }
-                console.log('both players yes')
         }
 
-        // const key = this.props.match.params.gameKey
+        const key = this.props.match.params.gameKey
         const gameObj = [
             state.cellOne,
             state.cellTwo,
@@ -225,14 +163,60 @@ class GameBoard extends Component {
             state.cellEight,
             state.cellNine,
         ];
-        // console.log(gameObj)
-        // makes sure board is clear before pushing gameobject to local storage, ensures its only pushed once per game
+        // makes sure board is clear before pushing gameobject to session storage, ensures its only pushed once per game
         if ((!gameObj.includes('x')) && (!gameObj.includes('circle'))) {
             this.setStorage(key, '');
-            console.log('u good')
         }
-        // ----------------
-        // on endgame; clear local storages
+        // assigning x and o signs to players, and not allowing more than 2 players in a single game
+        if ((state.playerOneJoined === '' ) && (state.playerTwoJoined === '')) {
+        // if both states are missing;
+            // push 'playerX' to session storage 
+            this.setStorage(key, 'playerX');
+            console.log(window.sessionStorage)
+            //  push player One joined to db
+            this.updatePlayerStatus('playerOneJoined', 'yes')
+            // set state player one joined
+            this.setState({
+                playerOneJoined: 'yes'
+            })
+            //  run placemark for boardclass x if boardclass is also x
+            if (state.boardClass === 'x') {
+                this.placeMark(cell, boardClass)
+            }
+        } else if ((state.playerOneJoined === 'yes') && (state.playerTwoJoined === '')) {
+        // if player one has joined but player 2 has not;
+            // push 'playerO' to session storage 
+            this.setStorage(key, 'playerO');
+            console.log(window.sessionStorage)
+            //  push player Two joined to db
+            this.updatePlayerStatus('playerTwoJoined', 'yes')
+            // set state player two joined
+            this.setState({
+                playerTwoJoined: 'yes'
+            })
+            //  run placemark for boardclass o if boardclass is also circle
+            if (state.boardClass === 'o') {
+                this.placeMark(cell, boardClass)
+            }
+        } else if (state.playerOneJoined && state.playerTwoJoined === 'yes') {
+            // if both players have joined on db, check for session storage to verify which player the user currently is one of the original two players
+            const sessionStorageItem = key
+            const storageThing = window.sessionStorage.getItem(sessionStorageItem);
+            console.log(storageThing, 'dkasjdfhgaskfhj')
+            if (storageThing === 'playerX') {
+            // if session storage has either player x;
+                // run placemark for x boardclass
+                console.log('verified player')
+            } else if  (storageThing === 'PlayerO') {
+            // if session storage has either player o;
+                // run placemark for o boardclass
+                console.log('verified player')
+            } else if (storageThing === null) {
+            // if session storage has neither player x or player o params;
+                // dont run anything (should there be an error handling message for the user?)
+                console.log('who are you')
+            }
+        }
     }
 
     // place x/o mark on board
@@ -240,14 +224,14 @@ class GameBoard extends Component {
         cell.classList.add(currentClass)
     }
 
-    // adds game to local storage
+    // adds game to session storage
     setStorage(key, status) {
         const sessionStorageItem = key
-        const localGameObject = [
+        const sessionGameObject = [
                 // will hold either 'playerX' or 'playerO'
                 status
         ]
-        window.sessionStorage.setItem((sessionStorageItem, JSON.stringify(sessionStorageItem)), localGameObject.join(","));
+        window.sessionStorage.setItem(sessionStorageItem, sessionGameObject);
         
     console.log(window.sessionStorage)
     }
@@ -341,20 +325,19 @@ class GameBoard extends Component {
             }
         }
         winningMessageElement.classList.add('show')
-
         // -------------
-        // clear local storage
+        // clear session storage
         // -------------
         const key = this.props.match.params.gameKey
         clearStorage(key)
         function clearStorage(key) {
-            window.sessionStorage.removeItem(key)
+            window.sessionStorage.clear(key)
         }
     }
 
     // a version of the endgame function specifically to be called by player 2 pulling data from db, to avoid multiple setstates and db updates
     endGamePlayerTwo = (draw) => {
-        const boardClass = this.state.boardClass
+        // const boardClass = this.state.boardClass
         const winningMessageElement = document.getElementById('winningMessage')
         const winningMessageTextElement = document.querySelector('[data-winning-message-text]')
         if (this.state.gameOutcome === 'x') {
@@ -377,7 +360,7 @@ class GameBoard extends Component {
     // clears board states and calls for clearing database info ------------
     handleRestart = () => {
         // --------------
-        // make sure user who clicks restart is one of the two players that has either player x or player o in local storage
+        // make sure user who clicks restart is one of the two players that has either player x or player o in session storage
         // --------------
 
         // remove cell classes
