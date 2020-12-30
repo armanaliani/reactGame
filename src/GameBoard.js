@@ -78,54 +78,6 @@ class GameBoard extends Component {
 
         // making sure there isnt already a marker in the chosen cell-------
         if ((!cellClassArr.includes('x')) && (!cellClassArr.includes('circle'))) {
-            // setting cell state of matching state class to x or circle
-            if(cellStateClass === 'cellOne') {
-                this.setState({
-                    cellOne: boardClass
-                })
-                this.updateCellData('cellOne')
-            } else if (cellStateClass === 'cellTwo') {
-                this.setState({
-                    cellTwo: boardClass
-                })
-                this.updateCellData('cellTwo')
-            } else if (cellStateClass === 'cellThree') {
-                this.setState({
-                    cellThree: boardClass
-                })
-                this.updateCellData('cellThree')
-            } else if (cellStateClass === 'cellFour') {
-                this.setState({
-                    cellFour: boardClass
-                })
-                this.updateCellData('cellFour')
-            } else if (cellStateClass === 'cellFive') {
-                this.setState({
-                    cellFive: boardClass
-                })
-                this.updateCellData('cellFive')
-            } else if (cellStateClass === 'cellSix') {
-                this.setState({
-                    cellSix: boardClass
-                })
-                this.updateCellData('cellSix')
-            } else if (cellStateClass === 'cellSeven') {
-                this.setState({
-                    cellSeven: boardClass
-                })
-                this.updateCellData('cellSeven')
-            } else if (cellStateClass === 'cellEight') {
-                this.setState({
-                    cellEight: boardClass
-                })
-                this.updateCellData('cellEight')
-            } else if (cellStateClass === 'cellNine') {
-                this.setState({
-                    cellNine: boardClass
-                })
-                this.updateCellData('cellNine')
-            }
-            // ----------------------------------------
             const key = this.props.match.params.gameKey
             const gameObj = [
                 state.cellOne,
@@ -147,13 +99,13 @@ class GameBoard extends Component {
             // if both states are missing;
                 // push 'playerX' to session storage 
                 this.setStorage(key, 'playerX');
-                console.log(window.sessionStorage)
                 //  push player One joined to db
                 this.updatePlayerStatus('playerOneJoined', 'yes')
                 // set state player one joined
                 this.setState({
                     playerOneJoined: 'yes'
                 })
+                this.setStateClass(cellStateClass)
                 //  run placemark for boardclass x if boardclass is also x
                 if (state.boardClass === 'x') {
                     placeMark(cell, boardClass)
@@ -162,13 +114,13 @@ class GameBoard extends Component {
             // if player one has joined but player 2 has not;
                 // push 'playerO' to session storage 
                 this.setStorage(key, 'playerO');
-                console.log(window.sessionStorage)
                 //  push player Two joined to db
                 this.updatePlayerStatus('playerTwoJoined', 'yes')
                 // set state player two joined
                 this.setState({
                     playerTwoJoined: 'yes'
                 })
+                this.setStateClass(cellStateClass)
                 //  run placemark for boardclass o if boardclass is also circle
                 if (state.boardClass === 'o') {
                     placeMark(cell, boardClass)
@@ -177,19 +129,23 @@ class GameBoard extends Component {
                 // if both players have joined on db, check for session storage to verify which player the user currently is one of the original two players
                 const sessionStorageItem = key
                 const storageThing = window.sessionStorage.getItem(sessionStorageItem);
-                console.log(storageThing, 'dkasjdfhgaskfhj')
                 if (storageThing === 'playerX') {
                 // if session storage has either player x;
                     // run placemark for x boardclass
-                    console.log('verified player')
-                } else if  (storageThing === 'PlayerO') {
+                    if (state.boardClass === 'x') {
+                        placeMark(cell, boardClass)
+                    }
+                    this.setStateClass(cellStateClass)
+                } else if  (storageThing === 'playerO') {
                 // if session storage has either player o;
                     // run placemark for o boardclass
-                    console.log('verified player')
+                    if (state.boardClass === 'circle') {
+                        placeMark(cell, boardClass)
+                    }
+                    this.setStateClass(cellStateClass)
                 } else if (storageThing === null) {
                 // if session storage has neither player x or player o params;
                     // dont run anything (should there be an error handling message for the user?)
-                    console.log('who are you')
                     return;
                 }
             }
@@ -218,74 +174,57 @@ class GameBoard extends Component {
                 this.switchTurns()
             }
         }
+    }
 
-        // const key = this.props.match.params.gameKey
-        // const gameObj = [
-        //     state.cellOne,
-        //     state.cellTwo,
-        //     state.cellThree,
-        //     state.cellFour,
-        //     state.cellFive,
-        //     state.cellSix,
-        //     state.cellSeven,
-        //     state.cellEight,
-        //     state.cellNine,
-        // ];
-        // // makes sure board is clear before pushing gameobject to session storage, ensures its only pushed once per game
-        // if ((!gameObj.includes('x')) && (!gameObj.includes('circle'))) {
-        //     this.setStorage(key, '');
-        // }
-        // // assigning x and o signs to players, and not allowing more than 2 players in a single game
-        // if ((state.playerOneJoined === '' ) && (state.playerTwoJoined === '')) {
-        // // if both states are missing;
-        //     // push 'playerX' to session storage 
-        //     this.setStorage(key, 'playerX');
-        //     console.log(window.sessionStorage)
-        //     //  push player One joined to db
-        //     this.updatePlayerStatus('playerOneJoined', 'yes')
-        //     // set state player one joined
-        //     this.setState({
-        //         playerOneJoined: 'yes'
-        //     })
-        //     //  run placemark for boardclass x if boardclass is also x
-        //     if (state.boardClass === 'x') {
-        //         this.placeMark(cell, boardClass)
-        //     }
-        // } else if ((state.playerOneJoined === 'yes') && (state.playerTwoJoined === '')) {
-        // // if player one has joined but player 2 has not;
-        //     // push 'playerO' to session storage 
-        //     this.setStorage(key, 'playerO');
-        //     console.log(window.sessionStorage)
-        //     //  push player Two joined to db
-        //     this.updatePlayerStatus('playerTwoJoined', 'yes')
-        //     // set state player two joined
-        //     this.setState({
-        //         playerTwoJoined: 'yes'
-        //     })
-        //     //  run placemark for boardclass o if boardclass is also circle
-        //     if (state.boardClass === 'o') {
-        //         this.placeMark(cell, boardClass)
-        //     }
-        // } else if (state.playerOneJoined && state.playerTwoJoined === 'yes') {
-        //     // if both players have joined on db, check for session storage to verify which player the user currently is one of the original two players
-        //     const sessionStorageItem = key
-        //     const storageThing = window.sessionStorage.getItem(sessionStorageItem);
-        //     console.log(storageThing, 'dkasjdfhgaskfhj')
-        //     if (storageThing === 'playerX') {
-        //     // if session storage has either player x;
-        //         // run placemark for x boardclass
-        //         console.log('verified player')
-        //     } else if  (storageThing === 'PlayerO') {
-        //     // if session storage has either player o;
-        //         // run placemark for o boardclass
-        //         console.log('verified player')
-        //     } else if (storageThing === null) {
-        //     // if session storage has neither player x or player o params;
-        //         // dont run anything (should there be an error handling message for the user?)
-        //         return;
-        //         console.log('who are you')
-        //     }
-        // }
+    setStateClass(cellStateClass) {
+        const boardClass = this.state.boardClass
+        // setting cell state of matching state class to x or circle
+        if(cellStateClass === 'cellOne') {
+            this.setState({
+                cellOne: boardClass
+            })
+            this.updateCellData('cellOne')
+        } else if (cellStateClass === 'cellTwo') {
+            this.setState({
+                cellTwo: boardClass
+            })
+            this.updateCellData('cellTwo')
+        } else if (cellStateClass === 'cellThree') {
+            this.setState({
+                cellThree: boardClass
+            })
+            this.updateCellData('cellThree')
+        } else if (cellStateClass === 'cellFour') {
+            this.setState({
+                cellFour: boardClass
+            })
+            this.updateCellData('cellFour')
+        } else if (cellStateClass === 'cellFive') {
+            this.setState({
+                cellFive: boardClass
+            })
+            this.updateCellData('cellFive')
+        } else if (cellStateClass === 'cellSix') {
+            this.setState({
+                cellSix: boardClass
+            })
+            this.updateCellData('cellSix')
+        } else if (cellStateClass === 'cellSeven') {
+            this.setState({
+                cellSeven: boardClass
+            })
+            this.updateCellData('cellSeven')
+        } else if (cellStateClass === 'cellEight') {
+            this.setState({
+                cellEight: boardClass
+            })
+            this.updateCellData('cellEight')
+        } else if (cellStateClass === 'cellNine') {
+            this.setState({
+                cellNine: boardClass
+            })
+            this.updateCellData('cellNine')
+        }
     }
 
     // place x/o mark on board
@@ -301,8 +240,6 @@ class GameBoard extends Component {
                 status
         ]
         window.sessionStorage.setItem(sessionStorageItem, sessionGameObject);
-        
-    console.log(window.sessionStorage)
     }
 
     // switches 'x'/'circle' turn -------------
