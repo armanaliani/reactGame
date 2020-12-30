@@ -47,6 +47,9 @@ class GameBoard extends Component {
                 playerOneJoined:snapshot.val().playerOneJoined,
                 playerTwoJoined:snapshot.val().playerTwoJoined,
             })
+
+            // check if theres an extra player
+            this.extraPlayer(key)
             
             // // check game outcome on load
             if (this.checkWin(this.state.boardClass)) {
@@ -58,10 +61,8 @@ class GameBoard extends Component {
                     gameOutcome: 'draw'
                 })
             }
-            this.handleRestartMessage()
-            // second game instance is somehow mounting and pushing data and overwriting outcomes
+            this.handleRestartMessage() 
         })
-
     }
 
     // when cell is clicked, place the appropriate marker based on turn, push new turn to firebase, and change cell state to 'x' or 'circle' -------------------------
@@ -117,7 +118,6 @@ class GameBoard extends Component {
             } else if ((state.playerOneJoined === 'yes') && (state.playerTwoJoined === '') && (storageThing === null)) {
             // if player one has joined but player 2 has not;
             //  run placemark for boardclass o if boardclass is also circle
-            console.log(state)
                 if (state.boardClass === 'circle') {
                         // push 'playerO' to session storage 
                         this.setStorage(key, 'playerO');
@@ -266,6 +266,16 @@ class GameBoard extends Component {
                 boardClass: 'x'
             })
             this.updateBoardClass('boardClass')
+        }
+    }
+
+    // checks to see if there is an extra player
+    extraPlayer(key) {
+        const state = this.state
+        const sessionStorageItem = key
+        const storageThing = window.sessionStorage.getItem(sessionStorageItem);
+        if ((state.playerOneJoined === 'yes') && (state.playerTwoJoined === 'yes') && (storageThing === null)) {
+            console.log('you who')
         }
     }
 
