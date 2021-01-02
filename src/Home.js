@@ -1,7 +1,7 @@
 // Home Page
 import React, {Component} from "react";
 import firebase from "./firebase";
-import {withRouter} from "react-router-dom";
+import {withRouter, Redirect} from "react-router-dom";
 
 class Home extends Component {
     constructor() {
@@ -21,6 +21,7 @@ class Home extends Component {
             gameOutcome: '',
             playerOneJoined:'',
             playerTwoJoined:'',
+            toLobby: false
         };
     }
 
@@ -48,12 +49,17 @@ onStart = (e) => {
     const {key} = dbRef.push(gameObj);
 
     this.setState({
-        key
+        key,
+        toLobby: true
     })
-    this.props.history.push(`/lobby/${key}`)
+    // this.props.history.push(`/lobby/${key}`)
 }
 
     render() {
+        const key = this.state.key
+        if(this.state.toLobby === true) {
+            return  <Redirect  to={`/lobby/${key}`} />
+        }
         return (
             <main>
                 <h1>Tic Tac Toe</h1>
