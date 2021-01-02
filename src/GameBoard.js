@@ -318,6 +318,7 @@ class GameBoard extends Component {
 
     // display game outcome
     endGame = (draw) => {
+        const key = this.props.match.params.gameKey
         const boardClass = this.state.boardClass
         const winningMessageElement = document.getElementById('winningMessage')
         const winningMessageTextElement = document.querySelector('[data-winning-message-text]')
@@ -364,7 +365,6 @@ class GameBoard extends Component {
         winningMessageElement.classList.add('show')
         // // clear session storage
         // // -------------
-        const key = this.props.match.params.gameKey
         clearStorage(key)
         function clearStorage(key) {
             window.sessionStorage.clear(key)
@@ -373,7 +373,7 @@ class GameBoard extends Component {
 
     // a version of the endgame function specifically to be called by player 2 pulling data from db, to avoid multiple setstates and db updates
     endGamePlayerTwo = (draw) => {
-        // const boardClass = this.state.boardClass
+        const key = this.props.match.params.gameKey
         const winningMessageElement = document.getElementById('winningMessage')
         const winningMessageTextElement = document.querySelector('[data-winning-message-text]')
         if (this.state.gameOutcome === 'x') {
@@ -386,9 +386,8 @@ class GameBoard extends Component {
             this.setState({
                 gameOver: true
             })
-        } 
+        } else if ((draw) || (this.state.gameOutcome === 'draw')) {
         // including x and o win conditions so that a final x or o placement win does not get triggered as a draw
-        else if ((draw) || (this.state.gameOutcome === 'draw')) {
                 winningMessageTextElement.innerText = "Draw!"
                 if (this.state.gameOutcome === '') {
                     this.setState({
@@ -398,6 +397,12 @@ class GameBoard extends Component {
                 }
         }
         winningMessageElement.classList.add('show')
+        // // clear session storage
+        // // -------------
+        clearStorage(key)
+        function clearStorage(key) {
+            window.sessionStorage.clear(key)
+        }
     }
 
     // clears board states and calls for clearing database info ------------
