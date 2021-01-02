@@ -21,7 +21,6 @@ class GameBoard extends Component {
             gameOutcome: '',
             playerOneJoined:'',
             playerTwoJoined:'',
-            gameOver: false
         }
     }
 
@@ -48,8 +47,8 @@ class GameBoard extends Component {
                 playerOneJoined:snapshot.val().playerOneJoined,
                 playerTwoJoined:snapshot.val().playerTwoJoined,
             })
-            // check if theres an extra
-            this.extraPlayer(key)
+            // checks to see if there is an extra player
+            // extraPlayer(key)
             
             // // check game outcome on load
             if (this.checkWin(this.state.boardClass)) {
@@ -270,16 +269,14 @@ class GameBoard extends Component {
     }
 
     // checks to see if there is an extra player
-    extraPlayer(key) {
-        const state = this.state
-        const sessionStorageItem = key
-        const storageThing = window.sessionStorage.getItem(sessionStorageItem);
-        if ((state.playerOneJoined === 'yes') && (state.playerTwoJoined === 'yes') && (storageThing === null)) {
-            if (state.gameOver === false) {
-                console.log('you who')
-            }
-        }
-    }
+    // extraPlayer(key) {
+        // const state = this.state
+        // const sessionStorageItem = key
+        // const storageThing = window.sessionStorage.getItem(sessionStorageItem);
+        // if ((state.playerOneJoined === 'yes') && (state.playerTwoJoined === 'yes') && (storageThing === null)) {
+        //     console.log('you who')
+        // }
+    // }
 
     // check to see if theres a winning combination------------
     checkWin = (currentClass) => {
@@ -324,21 +321,14 @@ class GameBoard extends Component {
         const winningMessageTextElement = document.querySelector('[data-winning-message-text]')
         if (this.state.gameOutcome === 'x') {
             winningMessageTextElement.innerText = `X's Win!`
-            this.setState({
-                gameOver: true
-            })
         } else if (this.state.gameOutcome === 'circle') {
             winningMessageTextElement.innerText = `O's Win!`
-            this.setState({
-                gameOver: true
-            })
         } else {
             if ((draw) || (this.state.gameOutcome === 'draw')) {
                 winningMessageTextElement.innerText = "Draw!"
                 if (this.state.gameOutcome === '') {
                     this.setState({
                         gameOutcome: 'draw',
-                        gameOver: true
                     })
                 }
                 this.updateGameOutcome('draw')
@@ -347,7 +337,6 @@ class GameBoard extends Component {
                 if (this.state.gameOutcome === '') {
                     this.setState({
                         gameOutcome: 'x',
-                        gameOver: true
                     })
                 }
                 this.updateGameOutcome('x')
@@ -356,7 +345,6 @@ class GameBoard extends Component {
                 if (this.state.gameOutcome === '') {
                     this.setState({
                         gameOutcome: 'circle',
-                        gameOver: true
                     })
                 }
                 this.updateGameOutcome('circle')
@@ -378,21 +366,14 @@ class GameBoard extends Component {
         const winningMessageTextElement = document.querySelector('[data-winning-message-text]')
         if (this.state.gameOutcome === 'x') {
             winningMessageTextElement.innerText = `X's Win!`
-            this.setState({
-                gameOver: true
-            })
         } else if (this.state.gameOutcome === 'circle') {
             winningMessageTextElement.innerText = `O's Win!`
-            this.setState({
-                gameOver: true
-            })
         } else if ((draw) || (this.state.gameOutcome === 'draw')) {
         // including x and o win conditions so that a final x or o placement win does not get triggered as a draw
                 winningMessageTextElement.innerText = "Draw!"
                 if (this.state.gameOutcome === '') {
                     this.setState({
                         gameOutcome: 'draw',
-                        gameOver: true
                     })
                 }
         }
@@ -410,6 +391,12 @@ class GameBoard extends Component {
         // --------------
         // make sure user who clicks restart is one of the two players that has either player x or player o in session storage
         // --------------
+        // const state = this.state
+        // const sessionStorageItem = key
+        // const storageThing = window.sessionStorage.getItem(sessionStorageItem);
+        // if ((state.playerOneJoined === 'yes') && (state.playerTwoJoined === 'yes') && (storageThing === null)) {
+        //     console.log('you who')
+        // }
 
         // remove cell classes
         const cellElements = document.querySelectorAll('[data-cell]')
@@ -433,7 +420,6 @@ class GameBoard extends Component {
             cellEight: '',
             cellNine: '',
             gameOutcome: '',
-            gameOver: false
         })
         // clears db
         this.updateNewGame()
