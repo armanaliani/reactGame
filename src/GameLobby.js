@@ -23,13 +23,20 @@ class GameLobby extends Component {
         })
     }
 
+    copyLink() {
+        const url = document.getElementById('GameUrl')
+        input.select()
+        document.execCommand('copy')
+    }
+
 
     render() {
         const key = this.props.match.params.gameKey
         return (
             <div>
                 {/* use links as player X and player O versions? */}
-                <p>{`https://armanaliani.github.io/reactGame/gameboard/${key}`}</p>
+                <p id='gameUrl' >{`https://armanaliani.github.io/reactGame/gameboard/${key}`}</p>
+                <button onClick={this.copyLink}>copy url</button>
                 <Link to={`/gameboard/${key}`}>Play</Link>
             </div>
         )
