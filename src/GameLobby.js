@@ -29,7 +29,7 @@ class GameLobby extends Component {
         return (
             <div>
                 {/* use links as player X and player O versions? */}
-                <p>{`${process.env.PUBLIC_URL}/gameboard/${key}`}</p>
+                <p>{`https://armanaliani.github.io/reactGame/gameboard/${key}`}</p>
                 <Link to={`/gameboard/${key}`}>Play</Link>
             </div>
         )
