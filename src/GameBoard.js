@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import firebase from './firebase';
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 
 // component------------------
 class GameBoard extends Component {
@@ -21,7 +21,8 @@ class GameBoard extends Component {
             gameOutcome: '',
             playerOneJoined:'',
             playerTwoJoined:'',
-            gameOver: false
+            gameOver: false,
+            extraPlayer: false,
         }
     }
 
@@ -279,6 +280,10 @@ class GameBoard extends Component {
         if ((state.playerOneJoined === 'yes') && (state.playerTwoJoined === 'yes') && (storageThing === null)) {
             if ((!this.checkWin(boardClass)) && (!this.isDraw()) && (state.gameOver === false)) {
                 console.log('you who')
+                this.setState({
+                    extraPlayer: true
+                })
+                // this.props.history.push('/');
             }
         }
     }
@@ -545,6 +550,9 @@ class GameBoard extends Component {
     render() {
         const boardClass = this.state.boardClass;
         const state = this.state;
+        if (state.extraPlayer === true) {
+            return  <Redirect  to="/" />
+        }
         return (
             <main>
                 <div className={`board ${boardClass}`} id="board">
