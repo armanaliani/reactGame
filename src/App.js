@@ -13,8 +13,8 @@ class App extends Component {
     return (
         <Router basename={process.env.PUBLIC_URL}>
           <Route exact path="/" component={Home} />
-          <Route exact path="/lobby/:gameKey" component={GameLobby} />
-          <Route exact path="/gameboard/:gameKey" component={GameBoard} /> 
+          <Route path="/lobby/:gameKey" component={GameLobby} />
+          <Route path="/gameboard/:gameKey" component={GameBoard} /> 
         </Router>
     )
   }
