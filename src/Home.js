@@ -63,9 +63,10 @@ onStart = (e) => {
         return (
             <main>
                 <h1>Tic Tac Toe</h1>
-                <p>short description about how the game works</p>
+                <p>play tic tac toe online with friends</p>
+                <p>start game to get your game link to send to a friend</p>
                 <form onSubmit={this.onStart}>
-                    <button type="submit">submit</button>
+                    <button type="submit">start game</button>
                 </form>
             </main>
         )

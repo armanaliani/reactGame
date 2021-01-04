@@ -194,3 +194,9 @@ body {
 .winning-message.show {
   display: flex;
 }
+
+.gameLinkDiv {
+  display: flex ;
+  border: 1px solid black;
+  width: fit-content;
+}

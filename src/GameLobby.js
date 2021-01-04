@@ -34,8 +34,11 @@ class GameLobby extends Component {
         const key = this.props.match.params.gameKey
         return (
             <div>
-                <p id='gameUrl'>{`https://armanaliani.github.io/reactGame/gameboard/${key}`}</p>
-                <button onClick={this.copyLink}>copy url</button>
+                <p>heres your unique game link, send it to your opponent</p>
+                <div className="gameLinkDiv">
+                    <p id='gameUrl'>{`https://armanaliani.github.io/reactGame/gameboard/${key}`}</p>
+                    <button onClick={this.copyLink}>copy url</button>
+                </div>
                 <Link to={`/gameboard/${key}`}>Play</Link>
             </div>
         )
