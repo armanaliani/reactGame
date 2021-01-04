@@ -5,6 +5,8 @@ import Home from './Home';
 import GameLobby from './GameLobby';
 import GameBoard from './GameBoard';
 import Header from "./Header";
+import Footer from "./Footer";
+
 
 
 
@@ -18,6 +20,7 @@ class App extends Component {
             <Route exact path="/" component={Home} />
             <Route path="/lobby/:gameKey" component={GameLobby} />
             <Route path="/gameboard/:gameKey" component={GameBoard} /> 
+            <Footer />
           </Fragment>
         </Router>
     )
