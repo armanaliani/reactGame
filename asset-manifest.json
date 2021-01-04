@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/reactGame/static/css/main.bdf51074.chunk.css",
-    "main.js": "/reactGame/static/js/main.6cd0ae0e.chunk.js",
-    "main.js.map": "/reactGame/static/js/main.6cd0ae0e.chunk.js.map",
+    "main.css": "/reactGame/static/css/main.652e6a48.chunk.css",
+    "main.js": "/reactGame/static/js/main.90254209.chunk.js",
+    "main.js.map": "/reactGame/static/js/main.90254209.chunk.js.map",
     "runtime-main.js": "/reactGame/static/js/runtime-main.eafcf2e3.js",
     "runtime-main.js.map": "/reactGame/static/js/runtime-main.eafcf2e3.js.map",
-    "static/js/2.eef6bf97.chunk.js": "/reactGame/static/js/2.eef6bf97.chunk.js",
-    "static/js/2.eef6bf97.chunk.js.map": "/reactGame/static/js/2.eef6bf97.chunk.js.map",
+    "static/js/2.1426765d.chunk.js": "/reactGame/static/js/2.1426765d.chunk.js",
+    "static/js/2.1426765d.chunk.js.map": "/reactGame/static/js/2.1426765d.chunk.js.map",
     "static/js/3.09b435d0.chunk.js": "/reactGame/static/js/3.09b435d0.chunk.js",
     "static/js/3.09b435d0.chunk.js.map": "/reactGame/static/js/3.09b435d0.chunk.js.map",
     "index.html": "/reactGame/index.html",
-    "static/css/main.bdf51074.chunk.css.map": "/reactGame/static/css/main.bdf51074.chunk.css.map",
-    "static/js/2.eef6bf97.chunk.js.LICENSE.txt": "/reactGame/static/js/2.eef6bf97.chunk.js.LICENSE.txt"
+    "static/css/main.652e6a48.chunk.css.map": "/reactGame/static/css/main.652e6a48.chunk.css.map",
+    "static/js/2.1426765d.chunk.js.LICENSE.txt": "/reactGame/static/js/2.1426765d.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.eafcf2e3.js",
-    "static/js/2.eef6bf97.chunk.js",
-    "static/css/main.bdf51074.chunk.css",
-    "static/js/main.6cd0ae0e.chunk.js"
+    "static/js/2.1426765d.chunk.js",
+    "static/css/main.652e6a48.chunk.css",
+    "static/js/main.90254209.chunk.js"
   ]
 }
