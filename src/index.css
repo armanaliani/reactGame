@@ -201,3 +201,13 @@ body {
   border: 1px solid black;
   width: fit-content;
 }
+
+/* general*/
+footer,
+header {
+  height: 10vh;
+}
+
+.mainPageContent {
+  height: 80vh;
+}

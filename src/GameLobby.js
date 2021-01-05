@@ -33,7 +33,7 @@ class GameLobby extends Component {
     render() {
         const key = this.props.match.params.gameKey
         return (
-            <div>
+            <div className="mainPageContent">
                 <p>heres your unique game link, send it to your opponent</p>
                 <div className="gameLinkDiv">
                     <p id='gameUrl'>{`https://armanaliani.github.io/reactGame/gameboard/${key}`}</p>

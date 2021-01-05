@@ -554,7 +554,7 @@ class GameBoard extends Component {
             return  <Redirect  to="/" />
         }
         return (
-            <main>
+            <main className="mainPageContent">
                 <div className={`board ${boardClass}`} id="board">
                     <div className={`cell cellOne ${state.cellOne}`} data-cell onClick={this.handleClick}></div>
                     <div className={`cell cellTwo ${state.cellTwo}`} data-cell onClick={this.handleClick}></div>

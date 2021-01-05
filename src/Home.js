@@ -61,7 +61,7 @@ onStart = (e) => {
             return  <Redirect  to={`/lobby/${key}`} />
         }
         return (
-            <main>
+            <main className="mainPageContent">
                 <h1>Tic Tac Toe</h1>
                 <p>play tic tac toe online with friends</p>
                 <p>start game to get your game link to send to a friend</p>
