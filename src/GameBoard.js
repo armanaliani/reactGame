@@ -555,6 +555,9 @@ class GameBoard extends Component {
         }
         return (
             <main className="mainPageContent">
+                <div>
+                    <p>player {state.boardClass} turn</p>
+                </div>
                 <div className={`board ${boardClass}`} id="board">
                     <div className={`cell cellOne ${state.cellOne}`} data-cell onClick={this.handleClick}></div>
                     <div className={`cell cellTwo ${state.cellTwo}`} data-cell onClick={this.handleClick}></div>
