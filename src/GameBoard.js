@@ -557,6 +557,35 @@ class GameBoard extends Component {
             // and same for O, if session storage has player O, on boardclass o show "your turn", else show "waiting for opponent..."
     // from the first turn mechanism, the message should change back and forth from "waiting for opponent..." and "its your turn"/"make your move"
     // this mechanism also needs to be reset with every new game
+    turnIndication() {
+        const state = this.state
+        const key = this.props.match.params.gameKey
+        const sessionStorageItem = key
+        const boardClass = this.state.boardClass
+        const storageThing = window.sessionStorage.getItem(sessionStorageItem);
+
+        if (state.playerOneJoined === '') {
+            console.log('its anyones move')
+        } else if (state.playerOneJoined === 'yes' && state.playerTwoJoined === '') {
+            console.log('its player 2/O turn')
+        } else if (state.playerOneJoined === 'yes' && state.playerTwoJoined === 'yes') {
+            if (storageThing === 'playerX') {
+                if (boardClass === 'x') {
+                    console.log('your/X move')
+                } else if (boardClass === 'circle') {
+                    console.log('waiting for opponent...')
+                }
+            }
+            if (storageThing === 'playerO') {
+                if (boardClass === 'circle') {
+                    console.log('your/O move')
+                } else if (boardClass === 'x') {
+                    console.log('waiting for opponent...')
+                }
+            }
+        }
+        
+    }
 
 
     render() {
@@ -565,6 +594,7 @@ class GameBoard extends Component {
         if (state.extraPlayer === true) {
             return  <Redirect  to="/" />
         }
+        this.turnIndication()
         return (
             <main className="mainPageContent">
                 <div>
