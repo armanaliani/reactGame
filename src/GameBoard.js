@@ -546,6 +546,18 @@ class GameBoard extends Component {
         });
     }
 
+    // player turn indicator text; 
+    // for first turn (no player joined in db, and no params in session storage), show;
+        // "make the first move or wait for your opponent"
+    // then on component mount for player 2 (db showing player 1 joined "yes"), show;
+        // "You are O's, make your move"
+        // ++
+        // for player 1; "waiting for opponent..."
+            // from here, if session storage has player x, on boardclass x show "your turn", else show "waiting for opponent..."
+            // and same for O, if session storage has player O, on boardclass o show "your turn", else show "waiting for opponent..."
+    // from the first turn mechanism, the message should change back and forth from "waiting for opponent..." and "its your turn"/"make your move"
+    // this mechanism also needs to be reset with every new game
+
 
     render() {
         const boardClass = this.state.boardClass;

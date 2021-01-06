@@ -39,7 +39,7 @@ class GameLobby extends Component {
                     <p id='gameUrl'>{`https://armanaliani.github.io/reactGame/gameboard/${key}`}</p>
                     <button onClick={this.copyLink}>copy url</button>
                 </div>
-                <Link to={`/gameboard/${key}`}>Play</Link>
+                <Link to={`/gameboard/${key}`}>Join Game</Link>
             </div>
         )
     }
