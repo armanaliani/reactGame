@@ -563,6 +563,7 @@ class GameBoard extends Component {
         const sessionStorageItem = key
         const boardClass = this.state.boardClass
         const storageThing = window.sessionStorage.getItem(sessionStorageItem);
+        const turnMssg = document.getElementsByClassName(`turnIndicatorMssg`)
 
         if (state.playerOneJoined === '') {
             console.log('its anyones move')
@@ -584,7 +585,6 @@ class GameBoard extends Component {
                 }
             }
         }
-        
     }
 
 
@@ -597,8 +597,8 @@ class GameBoard extends Component {
         this.turnIndication()
         return (
             <main className="mainPageContent">
-                <div>
-                    <p>player {state.boardClass} turn</p>
+                <div className="turnIndicatorMssg">
+                    
                 </div>
                 <div className={`board ${boardClass}`} id="board">
                     <div className={`cell cellOne ${state.cellOne}`} data-cell onClick={this.handleClick}></div>
@@ -614,8 +614,8 @@ class GameBoard extends Component {
                 <div className="winning-message" id="winningMessage">
                     <div data-winning-message-text></div>
                     <div className="messageButtons">
-                        <button id="restartButton" onClick={this.handleRestart}>Restart</button>
-                        <Link to="/" className="newGame" onClick={this.handleRestart}>New Game</Link>
+                        <button id="restartButton button" onClick={this.handleRestart}>Restart</button>
+                        <Link to="/" className="newGame button" onClick={this.handleRestart}>New Game</Link>
                     </div>
                 </div>
             </main>

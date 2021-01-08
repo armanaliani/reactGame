@@ -215,3 +215,22 @@ header {
   align-items: center;
   flex-direction: column;
 }
+/* general button styles */
+.button {
+  text-decoration: none;
+  border: solid 3px black;
+  /* pick colour pallete later with images */
+  background-color: white;
+  color :black;
+  font-size: 16px;
+  text-transform: capitalize;
+  margin: 5px;
+  padding: 5px 7px;
+  transition: all 0.2s;
+}
+
+.button:hover,
+.button:focus {
+  background-color: lightseagreen;
+  transform: scale(1.02);
+}

@@ -70,7 +70,7 @@ onStart = (e) => {
                     <li>Play</li>
                 </ul>
                 <form onSubmit={this.onStart}>
-                    <button type="submit">start game</button>
+                    <button type="submit" className="button">start game</button>
                 </form>
             </main>
         )
