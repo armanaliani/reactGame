@@ -23,6 +23,7 @@ class GameBoard extends Component {
             playerTwoJoined:'',
             gameOver: false,
             extraPlayer: false,
+            turnMssg: 'its anyones move',
         }
     }
 
@@ -62,7 +63,8 @@ class GameBoard extends Component {
                     gameOutcome: 'draw'
                 })
             }
-            this.handleRestartMessage() 
+            this.handleRestartMessage()
+            this.turnIndication()
         })
     }
 
@@ -186,6 +188,7 @@ class GameBoard extends Component {
             //     this.switchTurns()
             // }
         }
+        this.turnIndication()
     }
 
     setStateClass(cellStateClass) {
@@ -376,6 +379,7 @@ class GameBoard extends Component {
         function clearStorage(key) {
             window.sessionStorage.clear(key)
         }
+        
     }
 
     // a version of the endgame function specifically to be called by player 2 pulling data from db, to avoid multiple setstates and db updates
@@ -516,6 +520,7 @@ class GameBoard extends Component {
                 dbRef.set(value);
             }
         });
+        // this.turnIndication()
     }
 
     // send player one/two joined game to db ---------------
@@ -527,6 +532,7 @@ class GameBoard extends Component {
             value = status
             dbRef.set(value);
         })
+        // this.turnIndication()
     }
 
     // send board class to firebase ---------------------
@@ -544,6 +550,7 @@ class GameBoard extends Component {
                 dbRef.set(value);
             }
         });
+        // this.turnIndication()
     }
 
     // player turn indicator text; 
@@ -563,25 +570,43 @@ class GameBoard extends Component {
         const sessionStorageItem = key
         const boardClass = this.state.boardClass
         const storageThing = window.sessionStorage.getItem(sessionStorageItem);
-        const turnMssg = document.getElementsByClassName(`turnIndicatorMssg`)
+        console.log(state, storageThing)
 
         if (state.playerOneJoined === '') {
             console.log('its anyones move')
+            this.setState({
+                turnMssg: 'its anyones move'
+            })
         } else if (state.playerOneJoined === 'yes' && state.playerTwoJoined === '') {
             console.log('its player 2/O turn')
+            this.setState({
+                turnMssg: 'its player 2/O turn'
+            })
         } else if (state.playerOneJoined === 'yes' && state.playerTwoJoined === 'yes') {
             if (storageThing === 'playerX') {
                 if (boardClass === 'x') {
                     console.log('your/X move')
+                    this.setState({
+                        turnMssg: 'your/X move'
+                    })
                 } else if (boardClass === 'circle') {
                     console.log('waiting for opponent...')
+                    this.setState({
+                        turnMssg: 'waiting for opponent...'
+                    })
                 }
             }
             if (storageThing === 'playerO') {
                 if (boardClass === 'circle') {
                     console.log('your/O move')
+                    this.setState({
+                        turnMssg: 'your/O move'
+                    })
                 } else if (boardClass === 'x') {
                     console.log('waiting for opponent...')
+                    this.setState({
+                        turnMssg: 'waiting for opponent...'
+                    })
                 }
             }
         }
@@ -594,11 +619,10 @@ class GameBoard extends Component {
         if (state.extraPlayer === true) {
             return  <Redirect  to="/" />
         }
-        this.turnIndication()
         return (
             <main className="mainPageContent">
-                <div className="turnIndicatorMssg">
-                    
+                <div className="turnIndicatorMssg" id="turnIndMssg">
+                    <p>{state.turnMssg}</p>
                 </div>
                 <div className={`board ${boardClass}`} id="board">
                     <div className={`cell cellOne ${state.cellOne}`} data-cell onClick={this.handleClick}></div>
