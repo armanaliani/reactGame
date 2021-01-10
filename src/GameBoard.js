@@ -491,6 +491,7 @@ class GameBoard extends Component {
                 ref.set(value);
             })
         })
+        this.turnIndication()
     }
 
     // send game outcome info to firebase db --------------
