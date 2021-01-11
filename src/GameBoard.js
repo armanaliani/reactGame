@@ -272,6 +272,7 @@ class GameBoard extends Component {
             })
             this.updateBoardClass('boardClass')
         }
+        this.turnIndication()
     }
 
     // checks to see if there is an extra player
@@ -444,7 +445,8 @@ class GameBoard extends Component {
             cellEight: '',
             cellNine: '',
             gameOutcome: '',
-            gameOver: false
+            gameOver: false,
+            turnIndication: 'its anyones move'
         })
         // clears db
         this.updateNewGame()
@@ -491,7 +493,9 @@ class GameBoard extends Component {
                 ref.set(value);
             })
         })
-        this.turnIndication()
+        this.setState({
+            turnMssg: 'its anyones move'
+        })
     }
 
     // send game outcome info to firebase db --------------
