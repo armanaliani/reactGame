@@ -118,6 +118,9 @@ class GameBoard extends Component {
                         placeMark(cell, boardClass)
                         // switch player turns
                         this.switchTurns()
+                        this.setState({
+                            turnMssg: 'waiting for opponent...'
+                        })
                     }
             } else if ((state.playerOneJoined === 'yes') && (state.playerTwoJoined === '') && (storageThing === null)) {
             // if player one has joined but player 2 has not;
@@ -135,6 +138,9 @@ class GameBoard extends Component {
                         placeMark(cell, boardClass)
                         // switch player turns
                         this.switchTurns()
+                        this.setState({
+                            turnMssg: 'waiting for opponent...'
+                        })
                     }
             } else if (state.playerOneJoined && state.playerTwoJoined === 'yes') {
                 // if both players have joined on db, check for session storage to verify which player the user currently is one of the original two players
@@ -146,6 +152,9 @@ class GameBoard extends Component {
                         this.setStateClass(cellStateClass)
                         // switch player turns
                         this.switchTurns()
+                        this.setState({
+                            turnMssg: 'waiting for opponent...'
+                        })
                     }
                 } else if  (storageThing === 'playerO') {
                 // if session storage has either player o;
@@ -155,6 +164,9 @@ class GameBoard extends Component {
                         this.setStateClass(cellStateClass)
                         // switch player turns
                         this.switchTurns()
+                        this.setState({
+                            turnMssg: 'waiting for opponent...'
+                        })
                     }
                 } else if (storageThing === null) {
                 // if session storage has neither player x or player o params;
@@ -188,7 +200,6 @@ class GameBoard extends Component {
             //     this.switchTurns()
             // }
         }
-        this.turnIndication()
     }
 
     setStateClass(cellStateClass) {
@@ -242,11 +253,6 @@ class GameBoard extends Component {
         }
     }
 
-    // place x/o mark on board
-    // placeMark(cell, currentClass) {
-    //     cell.classList.add(currentClass)
-    // }
-
     // adds game to session storage
     setStorage(key, status) {
         const sessionStorageItem = key
@@ -272,7 +278,6 @@ class GameBoard extends Component {
             })
             this.updateBoardClass('boardClass')
         }
-        this.turnIndication()
     }
 
     // checks to see if there is an extra player
@@ -525,7 +530,6 @@ class GameBoard extends Component {
                 dbRef.set(value);
             }
         });
-        // this.turnIndication()
     }
 
     // send player one/two joined game to db ---------------
@@ -537,7 +541,6 @@ class GameBoard extends Component {
             value = status
             dbRef.set(value);
         })
-        // this.turnIndication()
     }
 
     // send board class to firebase ---------------------
@@ -555,65 +558,31 @@ class GameBoard extends Component {
                 dbRef.set(value);
             }
         });
-        // this.turnIndication()
     }
 
-    // player turn indicator text; 
-    // for first turn (no player joined in db, and no params in session storage), show;
-        // "make the first move or wait for your opponent"
-    // then on component mount for player 2 (db showing player 1 joined "yes"), show;
-        // "You are O's, make your move"
-        // ++
-        // for player 1; "waiting for opponent..."
-            // from here, if session storage has player x, on boardclass x show "your turn", else show "waiting for opponent..."
-            // and same for O, if session storage has player O, on boardclass o show "your turn", else show "waiting for opponent..."
-    // from the first turn mechanism, the message should change back and forth from "waiting for opponent..." and "its your turn"/"make your move"
-    // this mechanism also needs to be reset with every new game
     turnIndication() {
         const state = this.state
         const key = this.props.match.params.gameKey
         const sessionStorageItem = key
         const boardClass = this.state.boardClass
         const storageThing = window.sessionStorage.getItem(sessionStorageItem);
-        console.log(state, storageThing)
 
-        if (state.playerOneJoined === '') {
-            console.log('its anyones move')
+        if (state.playerOneJoined === '' && state.playerTwoJoined === '') {
             this.setState({
-                turnMssg: 'its anyones move'
+                turnMssg: `its anyones move`
             })
-        } else if (state.playerOneJoined === 'yes' && state.playerTwoJoined === '') {
-            console.log('its player 2/O turn')
+        } else if  (state.playerOneJoined === 'yes' && state.playerTwoJoined === '') {
             this.setState({
-                turnMssg: 'its player 2/O turn'
+                turnMssg: `your/O  move`
             })
-        } else if (state.playerOneJoined === 'yes' && state.playerTwoJoined === 'yes') {
-            if (storageThing === 'playerX') {
-                if (boardClass === 'x') {
-                    console.log('your/X move')
-                    this.setState({
-                        turnMssg: 'your/X move'
-                    })
-                } else if (boardClass === 'circle') {
-                    console.log('waiting for opponent...')
-                    this.setState({
-                        turnMssg: 'waiting for opponent...'
-                    })
-                }
-            }
-            if (storageThing === 'playerO') {
-                if (boardClass === 'circle') {
-                    console.log('your/O move')
-                    this.setState({
-                        turnMssg: 'your/O move'
-                    })
-                } else if (boardClass === 'x') {
-                    console.log('waiting for opponent...')
-                    this.setState({
-                        turnMssg: 'waiting for opponent...'
-                    })
-                }
-            }
+        } else if ((state.playerOneJoined === 'yes') && (state.playerTwoJoined === 'yes') && (storageThing === 'playerX') && (boardClass === 'x')) {
+            this.setState({
+                turnMssg: 'your/X move'
+            })
+        }  else if ((state.playerOneJoined === 'yes') && (state.playerTwoJoined === 'yes') && (storageThing === 'playerO') && (boardClass === 'circle')) {
+            this.setState({
+                turnMssg: 'your/O move'
+            })
         }
     }
 
