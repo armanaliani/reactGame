@@ -47,8 +47,8 @@ class GameBoard extends Component {
                 cellNine: snapshot.val().cellNine,
                 boardClass: snapshot.val().boardClass,
                 gameOutcome: snapshot.val().gameOutcome,
-                playerOneJoined:snapshot.val().playerOneJoined,
-                playerTwoJoined:snapshot.val().playerTwoJoined,
+                playerOneJoined: snapshot.val().playerOneJoined,
+                playerTwoJoined: snapshot.val().playerTwoJoined,
             })
             // checks to see if there is an extra player
             this.extraPlayer(key)
@@ -153,7 +153,7 @@ class GameBoard extends Component {
                         // switch player turns
                         this.switchTurns()
                         this.setState({
-                            turnMssg: 'waiting for opponent...'
+                            turnMssg: 'waiting for opponent...',
                         })
                     }
                 } else if  (storageThing === 'playerO') {
@@ -165,7 +165,7 @@ class GameBoard extends Component {
                         // switch player turns
                         this.switchTurns()
                         this.setState({
-                            turnMssg: 'waiting for opponent...'
+                            turnMssg: 'waiting for opponent...',
                         })
                     }
                 } else if (storageThing === null) {
@@ -451,7 +451,8 @@ class GameBoard extends Component {
             cellNine: '',
             gameOutcome: '',
             gameOver: false,
-            turnIndication: 'its anyones move'
+            turnIndication: 'its anyones move',
+            
         })
         // clears db
         this.updateNewGame()
@@ -567,11 +568,19 @@ class GameBoard extends Component {
         const boardClass = this.state.boardClass
         const storageThing = window.sessionStorage.getItem(sessionStorageItem);
 
-        if (state.playerOneJoined === '' && state.playerTwoJoined === '') {
+        if((storageThing === 'playerX') && (boardClass === 'circle')) {
+            this.setState({
+                turnMssg: `waiting for opponent...`
+            })
+        } else if ((storageThing === 'playerO') && (boardClass === 'x')) {
+            this.setState({
+                turnMssg: `waiting for opponent...`
+            })
+        } else if ((state.playerOneJoined === '') && (state.playerTwoJoined === '')) {
             this.setState({
                 turnMssg: `its anyones move`
             })
-        } else if  (state.playerOneJoined === 'yes' && state.playerTwoJoined === '') {
+        } else if  ((state.playerOneJoined === 'yes') && (state.playerTwoJoined === '') && (!storageThing === 'playerO')) {
             this.setState({
                 turnMssg: `its your move player O`
             })
@@ -583,6 +592,8 @@ class GameBoard extends Component {
             this.setState({
                 turnMssg: 'its your move player O'
             })
+        } else {
+            return
         }
     }
 
