@@ -573,15 +573,15 @@ class GameBoard extends Component {
             })
         } else if  (state.playerOneJoined === 'yes' && state.playerTwoJoined === '') {
             this.setState({
-                turnMssg: `your/O  move`
+                turnMssg: `its your move player O`
             })
         } else if ((state.playerOneJoined === 'yes') && (state.playerTwoJoined === 'yes') && (storageThing === 'playerX') && (boardClass === 'x')) {
             this.setState({
-                turnMssg: 'your/X move'
+                turnMssg: 'its your move player X'
             })
         }  else if ((state.playerOneJoined === 'yes') && (state.playerTwoJoined === 'yes') && (storageThing === 'playerO') && (boardClass === 'circle')) {
             this.setState({
-                turnMssg: 'your/O move'
+                turnMssg: 'its your move player O'
             })
         }
     }
