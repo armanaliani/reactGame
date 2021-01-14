@@ -580,7 +580,7 @@ class GameBoard extends Component {
             this.setState({
                 turnMssg: `its anyones move`
             })
-        } else if  ((state.playerOneJoined === 'yes') && (state.playerTwoJoined === '') && (!storageThing === 'playerO')) {
+        } else if  ((state.playerOneJoined === 'yes') && (state.playerTwoJoined === '')) {
             this.setState({
                 turnMssg: `its your move player O`
             })

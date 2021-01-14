@@ -200,6 +200,15 @@ body {
   display: flex ;
   border: 1px solid black;
   width: fit-content;
+  position: relative;
+}
+
+.copiedLink {
+  display: none;
+}
+
+.copiedLink.show {
+  display: flex;
 }
 
 /* general*/
@@ -234,3 +243,4 @@ header {
   background-color: lightseagreen;
   transform: scale(1.02);
 }
+

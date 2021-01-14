@@ -7,7 +7,8 @@ class GameLobby extends Component {
     constructor() {
         super();
         this.state = {
-            game: {}
+            game: {},
+            linkCopied: false
         };
     }
 
@@ -27,6 +28,16 @@ class GameLobby extends Component {
         const copyUrl = document.getElementById('gameUrl').textContent
         const clipboard = window.navigator.clipboard;
         clipboard.writeText(copyUrl)
+        this.setState({
+            linkCopied: true
+        })
+        setTimeout(this.removeMssg, 1000)
+    }
+
+    removeMssg = () => {
+        this.setState({
+            linkCopied: false
+        })
     }
 
 
@@ -39,6 +50,7 @@ class GameLobby extends Component {
                     <p id='gameUrl'>{`https://armanaliani.github.io/reactGame/gameboard/${key}`}</p>
                     <button onClick={this.copyLink}>copy url</button>
                 </div>
+                <p className={this.state.linkCopied === true ? "show copiedLink" : "copiedLink"}>Copied to Clipboard</p>
                 <Link to={`/gameboard/${key}`} className="button">Join Game</Link>
             </div>
         )
