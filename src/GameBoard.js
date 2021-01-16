@@ -599,6 +599,7 @@ class GameBoard extends Component {
 
 
     render() {
+        const key = this.props.match.params.gameKey
         const boardClass = this.state.boardClass;
         const state = this.state;
         if (state.extraPlayer === true) {
@@ -627,6 +628,7 @@ class GameBoard extends Component {
                         <Link to="/" className="newGame button" onClick={this.handleRestart}>New Game</Link>
                     </div>
                 </div>
+                <Link to={`/lobby/${key}`} className="button">Back to Lobby</Link>
             </main>
         )
     }
