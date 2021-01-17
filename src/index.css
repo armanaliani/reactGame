@@ -215,7 +215,23 @@ body {
 footer,
 header {
   height: 10vh;
+  display: flex;
+  justify-content: center;
 }
+
+footer a,
+header a {
+  text-decoration: none;
+  color: black;
+}
+
+footer a:hover,
+footer a:focus,
+header a:hover,
+header a:focus {
+  color: red;
+}
+/* ///////////// */
 
 .mainPageContent {
   height: 80vh;
@@ -240,7 +256,16 @@ header {
 
 .button:hover,
 .button:focus {
-  background-color: lightseagreen;
-  transform: scale(1.02);
+  background-color: rgb(243, 115, 115);
 }
 
+.turnIndicatorMssg p {
+  margin-bottom: 0;
+}
+
+.gameLinkDiv p {
+  max-width: 90vw;
+  
+}
+
+/* media queries */
