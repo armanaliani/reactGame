@@ -240,6 +240,10 @@ header a:focus {
   align-items: center;
   flex-direction: column;
 }
+
+.mainPageContent h1 {
+  font-family: 'Russo One', sans-serif;
+}
 /* general button styles */
 .button {
   text-decoration: none;
