@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import firebase from "./firebase";
 import {Link} from 'react-router-dom';
+import image from './assets/gameController.png';
+
 
 
 class GameLobby extends Component {
@@ -44,7 +46,7 @@ class GameLobby extends Component {
     render() {
         const key = this.props.match.params.gameKey
         return (
-            <div className="mainPageContent">
+            <div className="mainPageContent wrapper">
                 <p>heres your unique game link, send it to your opponent</p>
                 <div className="gameLinkDiv">
                     <p id='gameUrl'>{`https://armanaliani.github.io/reactGame/gameboard/${key}`}</p>
@@ -52,6 +54,9 @@ class GameLobby extends Component {
                 </div>
                 <p className={this.state.linkCopied === true ? "show copiedLink" : "copiedLink"}>Copied to Clipboard</p>
                 <Link to={`/gameboard/${key}`} className="button">Join Game</Link>
+                <div className="lobbyImg img">
+                    <img src={image} alt=""/>
+                </div>
             </div>
         )
     }

@@ -606,7 +606,7 @@ class GameBoard extends Component {
             return  <Redirect  to="/" />
         }
         return (
-            <main className="mainPageContent">
+            <main className="mainPageContent wrapper gameBoard">
                 <div className="turnIndicatorMssg" id="turnIndMssg">
                     <p>{state.turnMssg}</p>
                 </div>

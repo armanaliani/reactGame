@@ -2,6 +2,7 @@
 import React, {Component} from "react";
 import firebase from "./firebase";
 import {withRouter, Redirect} from "react-router-dom";
+import image from './assets/gameMachineTwo.png';
 
 class Home extends Component {
     constructor() {
@@ -61,17 +62,22 @@ onStart = (e) => {
             return  <Redirect  to={`/lobby/${key}`} />
         }
         return (
-            <main className="mainPageContent">
-                <h1>TIC TAC TOE</h1>
-                <p>Play Tic Tac Toe online in 3 simple steps</p>
-                <ul>
-                    <li>Start a game</li>
-                    <li>Invite friends</li>
-                    <li>Play</li>
-                </ul>
-                <form onSubmit={this.onStart}>
-                    <button type="submit" className="button">start game</button>
-                </form>
+            <main className="mainPageContent wrapper home">
+                <div className="homeLayout">
+                    <h1>TIC TAC TOE</h1>
+                    <p>Play Tic Tac Toe online in 3 simple steps</p>
+                    <ul>
+                        <li>Start a game</li>
+                        <li>Invite friends</li>
+                        <li>Play</li>
+                    </ul>
+                    <form onSubmit={this.onStart}>
+                        <button type="submit" className="button">start game</button>
+                    </form>
+                </div>
+                <div className="homeImg img">
+                    <img src={image} alt=""/>
+                </div>
             </main>
         )
     }

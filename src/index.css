@@ -19,6 +19,12 @@ code {
     monospace;
 }
 /* //////////////////////////////////////////////////// */
+
+.wrapper {
+  max-width: 1200px;
+  width: 90%;
+  margin: 0 auto;
+}
 main {
   display: flex;
   flex-direction: column;
@@ -36,6 +42,7 @@ main {
 
 body {
   margin: 0;
+  font-family: 'Roboto', sans-serif;
 }
 
 .board {
@@ -52,7 +59,7 @@ body {
 .cell {
   width: var(--cell-size);
   height: var(--cell-size);
-  border: 1px solid black;
+  border: 3px solid black;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -219,6 +226,16 @@ header {
   justify-content: center;
 }
 
+footer {
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+footer p {
+  margin-top: 0;
+}
+
 footer a,
 header a {
   text-decoration: none;
@@ -272,4 +289,23 @@ header a:focus {
   
 }
 
+.homeImg img,
+.lobbyImg img {
+  height: 100%;
+  width: 100%;
+}
+.homeImg {
+  width: 45vw
+}
+.lobbyImg {
+  width: 30vw;
+}
+.homeLayout {
+  height: 100%;
+  width: 40vw;
+}
+
+.mainPageContent.home {
+  flex-direction: row;
+}
 /* media queries */
