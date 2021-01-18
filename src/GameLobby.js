@@ -30,7 +30,6 @@ class GameLobby extends Component {
         const copyUrl = document.getElementById('gameUrl').textContent
         const clipboard = window.navigator.clipboard;
         clipboard.writeText(copyUrl)
-        document.execCommand('copy')
         this.setState({
             linkCopied: true
         })
@@ -52,7 +51,7 @@ class GameLobby extends Component {
                 <div className="gameLinkDiv">
                     <p id='gameUrl'>{`https://armanaliani.github.io/reactGame/gameboard/${key}`}</p>
                     <div>
-                        <button onClick={this.copyLink}>Copy Link</button>
+                        <button onClick={this.copyLink} onTouchStart={this.copyLink}>Copy Link</button>
                         <p className={this.state.linkCopied === true ? "show copiedLink" : "copiedLink"}>Copied to Clipboard</p>
                     </div>
                 </div>
