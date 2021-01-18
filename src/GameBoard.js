@@ -288,7 +288,6 @@ class GameBoard extends Component {
         const storageThing = window.sessionStorage.getItem(sessionStorageItem);
         if ((state.playerOneJoined === 'yes') && (state.playerTwoJoined === 'yes') && (storageThing === null)) {
             if ((!this.checkWin(boardClass)) && (!this.isDraw()) && (state.gameOver === false)) {
-                console.log('you who')
                 this.setState({
                     extraPlayer: true
                 })
