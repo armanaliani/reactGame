@@ -46,8 +46,8 @@ body {
 }
 
 .board {
-  width: 100vw;
-  height: 100vh;
+  width: 90vw;
+  height: 60vh;
   display: grid;
   justify-content: center;
   align-content: center;
@@ -164,11 +164,13 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, .9);
+  /* background-color: rgba(0, 0, 0, .9); */
+  background-image: linear-gradient(to left, #e76f51c7, #e9c56acb);
   justify-content: center;
   align-items: center;
-  color: white;
-  font-size: 4rem;
+  color: black;
+  font-size: 4.4rem;
+  font-weight: bold;
   flex-direction: column;
 }
 
@@ -180,22 +182,24 @@ body {
 .winning-message button,
 .winning-message .newGame {
   font-size: 3rem;
-  background-color: white;
-  border: 1px solid black;
+  border: solid 3px black;
   padding: .25em .5em;
   cursor: pointer;
   text-decoration: none;
-  margin: 0 10px;
-  color: #000;
+  border-radius: 10px;
+  background-color: #264653;
+  color: white;
+  text-transform: capitalize;
+  margin: 5px;
+  font-weight: bold;
 }
 
 .winning-message button:hover,
 .winning-message button:focus,
 .winning-message .newGame:hover,
 .winning-message .newGame:focus {
-  background-color:black;
-  border-color: white;
-  color: white;
+  background-image: linear-gradient(to left, #E76F51, #E9C46A);
+  color: black;
 }
 
 .winning-message.show {
@@ -357,6 +361,8 @@ header a:focus {
 
 .turnIndicatorMssg p {
   margin-bottom: 0;
+  font-size: 1.1rem;
+  font-weight: bold;
 }
 
 .gameLinkDiv p {
@@ -488,6 +494,16 @@ header a:focus {
   }
   .wrapper {
     width: 95%;
+  }
+}
+
+@media (max-width: 500px) {
+  .messageButtons {
+    flex-direction: column;
+  }
+  .winning-message button,
+  .winning-message .newGame {
+    font-size: 2.2rem;
   }
 }
 

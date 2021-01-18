@@ -625,7 +625,7 @@ class GameBoard extends Component {
                     <div data-winning-message-text></div>
                     <div className="messageButtons">
                         <button id="restartButton button" onClick={this.handleRestart}>Restart</button>
-                        <Link to="/" className="newGame button" onClick={this.handleRestart}>New Game</Link>
+                        <Link to="/" className="newGame button" onClick={this.handleRestart}>Home</Link>
                     </div>
                 </div>
                 <Link to={`/lobby/${key}`} className="button">Back to Lobby</Link>
