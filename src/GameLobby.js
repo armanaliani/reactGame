@@ -27,9 +27,12 @@ class GameLobby extends Component {
     }
 
     copyLink = () => {
-        const copyUrl = document.getElementById('gameUrl').textContent
-        const clipboard = window.navigator.clipboard;
-        clipboard.writeText(copyUrl)
+        const copyUrl = document.getElementById('gameUrl')
+        copyUrl.select()
+        copyUrl.setSelectionRange(0, 99999)
+        document.execCommand("copy")
+        // const clipboard = window.navigator.clipboard;
+        // clipboard.writeText(copyUrl)
         this.setState({
             linkCopied: true
         })
