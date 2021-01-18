@@ -49,9 +49,10 @@ class GameLobby extends Component {
             <div className="mainPageContent gameLobby wrapper">
                 <p className="linkInstructions">Here's your unique game link, send it to your opponent</p>
                 <div className="gameLinkDiv">
-                    <p id='gameUrl'>{`https://armanaliani.github.io/reactGame/gameboard/${key}`}</p>
+                    {/* <p id='gameUrl'>{`https://armanaliani.github.io/reactGame/gameboard/${key}`}</p> */}
+                    <input type="text" id='gameUrl' value={`https://armanaliani.github.io/reactGame/gameboard/${key}`}/>
                     <div>
-                        <button onClick={this.copyLink} onTouchStart={this.copyLink}>Copy Link</button>
+                        <button onClick={this.copyLink}>Copy Link</button>
                         <p className={this.state.linkCopied === true ? "show copiedLink" : "copiedLink"}>Copied to Clipboard</p>
                     </div>
                 </div>
