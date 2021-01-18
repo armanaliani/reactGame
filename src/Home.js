@@ -69,7 +69,7 @@ onStart = (e) => {
                     <ul>
                         <li>Start a game</li>
                         <li>Invite friends</li>
-                        <li>Play</li>
+                        <li>Play!</li>
                     </ul>
                     <form onSubmit={this.onStart}>
                         <button type="submit" className="button">start game</button>

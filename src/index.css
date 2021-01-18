@@ -218,37 +218,42 @@ body {
   display: flex;
 }
 
-/* general*/
-footer,
+/* Header & Footer*/
+footer div,
 header {
   height: 10vh;
   display: flex;
   justify-content: center;
 }
 
-footer {
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
+footer p {
+  margin: 20px 40px;
+  font-size: 1.2rem;
 }
 
-footer p {
-  margin-top: 0;
+footer {
+  background-image: linear-gradient(to left, #E76F51, #E9C46A);
+  border-top: black 3px solid;
 }
 
 footer a,
 header a {
   text-decoration: none;
   color: black;
+  font-weight: bold;
 }
 
 footer a:hover,
 footer a:focus,
 header a:hover,
 header a:focus {
-  color: red;
+  color: #264653;
 }
 /* ///////////// */
+/* ///////////// */
+/* ///////////// */
+/* ///////////// */
+
 
 .mainPageContent {
   height: 80vh;
@@ -260,24 +265,36 @@ header a:focus {
 
 .mainPageContent h1 {
   font-family: 'Russo One', sans-serif;
+  letter-spacing: 3px;
+  background-color:#2A9D8F;
+  border: solid black 3px;
+  border-radius: 20px;
+  text-align: center;
+  text-shadow:
+		-4px -4px 0 white,
+		4px -4px 0 white,
+		-4px 4px 0 white,
+    4px 4px 0 white;
 }
 /* general button styles */
 .button {
   text-decoration: none;
   border: solid 3px black;
-  /* pick colour pallete later with images */
-  background-color: white;
-  color :black;
+  border-radius: 10px;
+  background-color: #264653;
+  color: white;
   font-size: 16px;
   text-transform: capitalize;
   margin: 5px;
   padding: 5px 7px;
-  transition: all 0.2s;
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 
 .button:hover,
 .button:focus {
-  background-color: rgb(243, 115, 115);
+  background-image: linear-gradient(to left, #E76F51, #E9C46A);
+  color: black;
 }
 
 .turnIndicatorMssg p {
@@ -303,6 +320,24 @@ header a:focus {
 .homeLayout {
   height: 100%;
   width: 40vw;
+}
+
+.homeLayout p, 
+.homeLayout form {
+  padding-left: 20%;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.homeLayout ul {
+  padding-left: 25%;
+  font-weight: bold;
+  list-style: square;
+}
+
+
+.homeLayout h1 {
+  font-size: 4rem;
 }
 
 .mainPageContent.home {
