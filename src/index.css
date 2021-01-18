@@ -454,7 +454,7 @@ header a:focus {
     border: 2px solid black;
     font-size: 0.8rem;
     white-space: nowrap;
-    text-overflow: ellipsis;
+    overflow: hidden;
   }
   .gameLinkDiv {
     max-width: 80vw;
