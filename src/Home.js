@@ -76,7 +76,7 @@ onStart = (e) => {
                     </form>
                 </div>
                 <div className="homeImg img">
-                    <img src={image} alt=""/>
+                    <img src={image} alt="old school arcade machine, ready to play Tic Tac Toe"/>
                 </div>
             </main>
         )

@@ -46,16 +46,18 @@ class GameLobby extends Component {
     render() {
         const key = this.props.match.params.gameKey
         return (
-            <div className="mainPageContent wrapper">
-                <p>heres your unique game link, send it to your opponent</p>
+            <div className="mainPageContent gameLobby wrapper">
+                <p>Here's your unique game link, send it to your opponent</p>
                 <div className="gameLinkDiv">
                     <p id='gameUrl'>{`https://armanaliani.github.io/reactGame/gameboard/${key}`}</p>
-                    <button onClick={this.copyLink}>copy url</button>
+                    <div>
+                        <button onClick={this.copyLink}>Copy Link</button>
+                        <p className={this.state.linkCopied === true ? "show copiedLink" : "copiedLink"}>Copied to Clipboard</p>
+                    </div>
                 </div>
-                <p className={this.state.linkCopied === true ? "show copiedLink" : "copiedLink"}>Copied to Clipboard</p>
                 <Link to={`/gameboard/${key}`} className="button">Join Game</Link>
                 <div className="lobbyImg img">
-                    <img src={image} alt=""/>
+                    <img src={image} alt="A gaming controller"/>
                 </div>
             </div>
         )

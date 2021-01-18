@@ -202,21 +202,56 @@ body {
   display: flex;
 }
 
-/* game lobby page */
+/* ///////////////////////////////////////////////////////////////// */
+/* Game Lobby Page */
+/* ///////////////////////////////////////////////////////////////// */
 .gameLinkDiv {
-  display: flex ;
-  border: 1px solid black;
+  display: flex;
+  border-radius: 20px;
   width: fit-content;
   position: relative;
+}
+.gameLinkDiv p {
+  padding: 15px;
+  height: 100%;
+  border: 3px solid black;
+  border-radius: 20px 0 0 20px;
+  margin: 0;
+  font-size: 0.9rem;
+}
+.gameLinkDiv button {
+  height: 100%;
+  border-radius: 0 20px 20px 0;
+  border: 3px black solid;
+  background-color: #264653;
+  color: white;
+  font-weight: bold;
+}
+.gameLinkDiv button:hover,
+.gameLinkDiv button:focus {
+  background-image: linear-gradient(to left, #E76F51, #E9C46A);
+  color: black;
+  cursor: pointer;
+}
+
+.gameLobby .button {
+  margin-top: 10px;
+}
+.gameLobby p {
+  margin-top: 0;
 }
 
 .copiedLink {
   display: none;
+  position: absolute;
 }
 
 .copiedLink.show {
   display: flex;
 }
+/* ///////////////////////////////////////////////////////////////// */
+/* Game Lobby Page ^^^^^^^^^^^^^*/
+/* ///////////////////////////////////////////////////////////////// */
 
 /* ///////////////////////////////////////////////////////////////// */
 /* Header & Footer Components*/
@@ -278,7 +313,9 @@ header a:focus {
 		-4px 4px 0 white,
     4px 4px 0 white;
 }
+/* ///////////////////////////////////////////////////////////////// */
 /* general button styles */
+/* ///////////////////////////////////////////////////////////////// */
 .button {
   text-decoration: none;
   border: solid 3px black;
@@ -298,6 +335,9 @@ header a:focus {
   background-image: linear-gradient(to left, #E76F51, #E9C46A);
   color: black;
 }
+/* ///////////////////////////////////////////////////////////////// */
+/* general button styles ^^^^^^^ */
+/* ///////////////////////////////////////////////////////////////// */
 
 .turnIndicatorMssg p {
   margin-bottom: 0;
@@ -447,5 +487,9 @@ header a:focus {
   }
   .homeLayout button {
     margin-bottom: 40px;
+  }
+  .homeImg img,
+  .lobbyImg img {
+    width: 95%;
   }
 }
