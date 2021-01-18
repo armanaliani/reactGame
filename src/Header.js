@@ -1,15 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import image from './assets/ticTacToeHeaderOne.png';
 
 
 const Header = () => {
     return (
         <header className="wrapper">
-            <p>
-                <Link to="/" tabIndex="0">
-                    Home
-                </Link>
-            </p>
+            <Link to="/" tabIndex="0">
+                <img className="headerImg" src={image} alt="Logo, to Home page" />
+            </Link>
         </header>
     )
 }
