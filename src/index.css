@@ -263,7 +263,7 @@ body {
 
 .lobbyImg {
   width: 30vw;
-  min-width: 350px;
+  min-width: 400px;
 }
 /* ///////////////////////////////////////////////////////////////// */
 /* Game Lobby Page ^^^^^^^^^^^^^*/
@@ -448,6 +448,23 @@ header a:focus {
   }
 }
 
+@media (max-width:750px) {
+  .gameLinkDiv p {
+    padding: 12px 10px;
+    border: 2px solid black;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .gameLinkDiv {
+    max-width: 80vw;
+  }
+  .gameLinkDiv button {
+    border: 2px black solid;
+  }
+}
+
 @media (max-width:650px) {
   footer div {
     flex-direction: column;
@@ -501,5 +518,18 @@ header a:focus {
   }
   .homeImg img{
     width: 95%;
+  }
+  .lobbyImg {
+    min-width: 350px;
+  }
+  .gameLobby .linkInstructions {
+    max-width: 27ch;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width:370px) {
+  .lobbyImg {
+    min-width: 300px;
   }
 }
