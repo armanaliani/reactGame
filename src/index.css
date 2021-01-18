@@ -209,7 +209,6 @@ body {
   display: flex;
   border-radius: 20px;
   width: fit-content;
-  position: relative;
 }
 .gameLinkDiv p {
   padding: 15px;
@@ -245,9 +244,26 @@ body {
   display: none;
   position: absolute;
 }
-
 .copiedLink.show {
   display: flex;
+  border: none;
+  border-radius: 0;
+  top: 9vh;
+  left: calc(50% - (150px / 2));
+  width: 150px;
+  margin: 0;
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 6px;
+  border: 2px solid black;
+  height: fit-content;
+  background-color: #2A9D8F;
+  color: white;
+}
+
+.lobbyImg {
+  width: 30vw;
+  min-width: 350px;
 }
 /* ///////////////////////////////////////////////////////////////// */
 /* Game Lobby Page ^^^^^^^^^^^^^*/
@@ -355,9 +371,7 @@ header a:focus {
 .homeImg {
   width: 45vw
 }
-.lobbyImg {
-  width: 30vw;
-}
+
 .homeLayout {
   height: 100%;
   width: 40vw;
@@ -383,8 +397,7 @@ header a:focus {
 /* media queries */
 /* //////////////////////////////////// */
 @media (max-width:1150px) {
-  .homeImg img,
-  .lobbyImg img {
+  .homeImg img{
     position: relative;
     left: -100px;
     width: 110%;
@@ -415,8 +428,7 @@ header a:focus {
   .mainPageContent.home {
     flex-direction: column;
   }
-  .homeImg img,
-  .lobbyImg img {
+  .homeImg img{
     position: relative;
     top: -30px;
     left: 20%;
@@ -448,8 +460,7 @@ header a:focus {
 }
 
 @media (max-width:610px) {
-  .homeImg img,
-  .lobbyImg img {
+  .homeImg img{
     position: relative;
     top: 0;
     left: 20px;
@@ -488,8 +499,7 @@ header a:focus {
   .homeLayout button {
     margin-bottom: 40px;
   }
-  .homeImg img,
-  .lobbyImg img {
+  .homeImg img{
     width: 95%;
   }
 }
