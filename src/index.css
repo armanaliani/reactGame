@@ -297,8 +297,12 @@ body {
 footer div,
 header {
   height: 10vh;
+  min-height: 50px;
   display: flex;
   justify-content: center;
+}
+footer div {
+  min-height: 70px;
 }
 
 header p {
@@ -370,6 +374,7 @@ header a:focus {
 /* ///////////////////////////////////////////////////////////////// */
 .mainPageContent {
   height: 80vh;
+  min-height: 550px;
   display: flex;
   justify-content: center;
   align-items: center;
