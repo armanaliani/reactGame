@@ -331,6 +331,7 @@ header a:focus {
   padding: 5px 7px;
   font-size: 1.2rem;
   font-weight: bold;
+  cursor: pointer;
 }
 
 .button:hover,
