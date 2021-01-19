@@ -150,7 +150,8 @@ body {
 }
 
 /* winning message */
-.winningMessage {
+.winningMessage,
+.extraPlyerMessage {
   display: none;
   position: fixed;
   top: 0;
@@ -194,8 +195,29 @@ body {
   color: black;
 }
 
-.winningMessage.show {
+.winningMessage.show,
+.extraPlyerMessage.show {
   display: flex;
+}
+
+.extraPlyerMessage div {
+  background-color: #264653;
+  text-align: center;
+  height: fit-content;
+  padding: 10px;
+  border-radius: 20px;
+  border: 3px solid black;
+}
+.extraPlyerMessage h2 {
+  margin-top: 10px;
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+  font-family: 'Russo One', sans-serif;
+}
+.extraPlyerMessage p {
+  font-size: 1rem;
+  color: white;
 }
 /* ///////////////////////////////////////////////////////////////// */
 /* Game Board Page ^^^^^^^^^^^^^^^^ */

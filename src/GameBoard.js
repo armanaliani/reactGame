@@ -277,14 +277,20 @@ class GameBoard extends Component {
         const sessionStorageItem = key
         const boardClass = this.state.boardClass
         const storageThing = window.sessionStorage.getItem(sessionStorageItem);
+        const extraMessageElement = document.getElementById('extraMessage')
         if ((state.playerOneJoined === 'yes') && (state.playerTwoJoined === 'yes') && (storageThing === null)) {
             if ((!this.checkWin(boardClass)) && (!this.isDraw()) && (state.gameOver === false)) {
-                this.setState({
-                    extraPlayer: true
-                })
-                // this.props.history.push('/');
+                extraMessageElement.classList.add('show')
+                setTimeout(this.extraPlayerRedirect, 3000)
             }
         }
+    }
+
+    // sets extra player to state (after delay from extraPlayer function)
+    extraPlayerRedirect = () => {
+        this.setState({
+            extraPlayer: true
+        })
     }
 
     // check to see if theres a winning combination------------
@@ -614,12 +620,12 @@ class GameBoard extends Component {
                     </div>
                 </div>
                 {/*pop up message to show to extra player explaining that redirect was due to game lobby being full*/}
-                {/* <div className="extraPlyerMessage" id="winningMessage">
-                    <p>game lobby full, redirecting to home</p>
-                    <div className="messageButtons">
-                        <Link to="/" className="newGame button" onClick={this.handleRestart}>Home</Link>
+                <div className="extraPlyerMessage" id="extraMessage">
+                    <div>
+                        <h2>This Games Full!</h2>
+                        <p>You'll be redirected in 3 seconds</p>
                     </div>
-                </div> */}
+                </div>
                 <Link to={`/lobby/${key}`} className="button">Back to Lobby</Link>
             </main>
         )
