@@ -169,18 +169,12 @@ class GameBoard extends Component {
                         })
                     }
                 } else if (storageThing === null) {
-                // if session storage has neither player x or player o params;
-                    // dont run anything (should there be an error handling message for the user?)
+                // if the player is an extra player do nothing
                     return;
                 }
             }
-
             // ----------------------------------------
-            // // switch player turns
-            // this.switchTurns()
-
             // places X or O in cell spot
-            // placeMark(cell, boardClass)
             function placeMark(cell, currentClass) {
                 cell.classList.add(currentClass)
             }
@@ -196,9 +190,6 @@ class GameBoard extends Component {
                     gameOutcome: 'draw',
                 })
             } 
-            // else {
-            //     this.switchTurns()
-            // }
         }
     }
 
@@ -384,7 +375,6 @@ class GameBoard extends Component {
         function clearStorage(key) {
             window.sessionStorage.clear(key)
         }
-        
     }
 
     // a version of the endgame function specifically to be called by player 2 pulling data from db, to avoid multiple setstates and db updates
@@ -423,10 +413,6 @@ class GameBoard extends Component {
 
     // clears board states and calls for clearing database info ------------
     handleRestart = () => {
-        // --------------
-        // make sure user who clicks restart is one of the two players that has either player x or player o in session storage
-        // --------------
-
         // remove cell classes
         const cellElements = document.querySelectorAll('[data-cell]')
         cellElements.forEach(cell => {
@@ -620,7 +606,7 @@ class GameBoard extends Component {
                     <div className={`cell cellEight ${state.cellEight}`} data-cell onClick={this.handleClick}></div>
                     <div className={`cell cellNine ${state.cellNine}`} data-cell onClick={this.handleClick}></div>
                 </div>
-                <div className="winning-message" id="winningMessage">
+                <div className="winningMessage" id="winningMessage">
                     <div data-winning-message-text></div>
                     <div className="messageButtons">
                         <button id="restartButton button" onClick={this.handleRestart}>Restart</button>

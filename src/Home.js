@@ -53,7 +53,6 @@ onStart = (e) => {
         key,
         toLobby: true
     })
-    // this.props.history.push(`/lobby/${key}`)
 }
 
     render() {
