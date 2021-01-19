@@ -613,6 +613,13 @@ class GameBoard extends Component {
                         <Link to="/" className="newGame button" onClick={this.handleRestart}>Home</Link>
                     </div>
                 </div>
+                {/*pop up message to show to extra player explaining that redirect was due to game lobby being full*/}
+                {/* <div className="extraPlyerMessage" id="winningMessage">
+                    <p>game lobby full, redirecting to home</p>
+                    <div className="messageButtons">
+                        <Link to="/" className="newGame button" onClick={this.handleRestart}>Home</Link>
+                    </div>
+                </div> */}
                 <Link to={`/lobby/${key}`} className="button">Back to Lobby</Link>
             </main>
         )
