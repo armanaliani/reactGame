@@ -31,6 +31,7 @@ class GameLobby extends Component {
         // for mobile
         copyUrl.setSelectionRange(0, 99999)
         document.execCommand("copy")
+        copyUrl.blur();
         this.setState({
             linkCopied: true
         })
