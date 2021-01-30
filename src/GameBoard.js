@@ -195,50 +195,51 @@ class GameBoard extends Component {
 
     setStateClass(cellStateClass) {
         const boardClass = this.state.boardClass
-        // setting cell state of matching state class to x or circle
-        if(cellStateClass === 'cellOne') {
-            this.setState({
-                cellOne: boardClass
-            })
-        } else if (cellStateClass === 'cellTwo') {
-            this.setState({
-                cellTwo: boardClass
-            })
-        } else if (cellStateClass === 'cellThree') {
-            this.setState({
-                cellThree: boardClass
-            })
-    
-        } else if (cellStateClass === 'cellFour') {
-            this.setState({
-                cellFour: boardClass
-            })
+        const newStateObj = this.state
 
-        } else if (cellStateClass === 'cellFive') {
+        if (cellStateClass === newStateObj) {
             this.setState({
-                cellFive: boardClass
+                newStateObj: boardClass
             })
-
-        } else if (cellStateClass === 'cellSix') {
-            this.setState({
-                cellSix: boardClass
-            })
-        } else if (cellStateClass === 'cellSeven') {
-            this.setState({
-                cellSeven: boardClass
-            })
-    
-        } else if (cellStateClass === 'cellEight') {
-            this.setState({
-                cellEight: boardClass
-            })
-    
-        } else if (cellStateClass === 'cellNine') {
-            this.setState({
-                cellNine: boardClass
-            })
-            // using [] bracket notation, a variable can be passed as state. you can set up a function where the cells classname is matched with the name of the same cell in state (create this state into a new object with bracket notation to retain all its props). when returning the object match, use that as the state variable and set its state to boardclass
         }
+        // setting cell state of matching state class to x or circle
+        // if(cellStateClass === 'cellOne') {
+        //     this.setState({
+        //         cellOne: boardClass
+        //     })
+        // } else if (cellStateClass === 'cellTwo') {
+        //     this.setState({
+        //         cellTwo: boardClass
+        //     })
+        // } else if (cellStateClass === 'cellThree') {
+        //     this.setState({
+        //         cellThree: boardClass
+        //     })
+        // } else if (cellStateClass === 'cellFour') {
+        //     this.setState({
+        //         cellFour: boardClass
+        //     })
+        // } else if (cellStateClass === 'cellFive') {
+        //     this.setState({
+        //         cellFive: boardClass
+        //     })
+        // } else if (cellStateClass === 'cellSix') {
+        //     this.setState({
+        //         cellSix: boardClass
+        //     })
+        // } else if (cellStateClass === 'cellSeven') {
+        //     this.setState({
+        //         cellSeven: boardClass
+        //     })
+        // } else if (cellStateClass === 'cellEight') {
+        //     this.setState({
+        //         cellEight: boardClass
+        //     })
+        // } else if (cellStateClass === 'cellNine') {
+        //     this.setState({
+        //         cellNine: boardClass
+        //     })
+        // }
         this.updateCellData(cellStateClass)
     }
 
@@ -594,6 +595,7 @@ class GameBoard extends Component {
         if (state.extraPlayer === true) {
             return  <Redirect  to="/" />
         }
+        console.log(state)
         return (
             <main className="mainPageContent wrapper gameBoard">
                 <div className="turnIndicatorMssg" id="turnIndMssg">
