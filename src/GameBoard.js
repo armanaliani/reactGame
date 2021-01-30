@@ -200,48 +200,46 @@ class GameBoard extends Component {
             this.setState({
                 cellOne: boardClass
             })
-            this.updateCellData('cellOne')
         } else if (cellStateClass === 'cellTwo') {
             this.setState({
                 cellTwo: boardClass
             })
-            this.updateCellData('cellTwo')
         } else if (cellStateClass === 'cellThree') {
             this.setState({
                 cellThree: boardClass
             })
-            this.updateCellData('cellThree')
+    
         } else if (cellStateClass === 'cellFour') {
             this.setState({
                 cellFour: boardClass
             })
-            this.updateCellData('cellFour')
+
         } else if (cellStateClass === 'cellFive') {
             this.setState({
                 cellFive: boardClass
             })
-            this.updateCellData('cellFive')
+
         } else if (cellStateClass === 'cellSix') {
             this.setState({
                 cellSix: boardClass
             })
-            this.updateCellData('cellSix')
         } else if (cellStateClass === 'cellSeven') {
             this.setState({
                 cellSeven: boardClass
             })
-            this.updateCellData('cellSeven')
+    
         } else if (cellStateClass === 'cellEight') {
             this.setState({
                 cellEight: boardClass
             })
-            this.updateCellData('cellEight')
+    
         } else if (cellStateClass === 'cellNine') {
             this.setState({
                 cellNine: boardClass
             })
-            this.updateCellData('cellNine')
+            // using [] bracket notation, a variable can be passed as state. you can set up a function where the cells classname is matched with the name of the same cell in state (create this state into a new object with bracket notation to retain all its props). when returning the object match, use that as the state variable and set its state to boardclass
         }
+        this.updateCellData(cellStateClass)
     }
 
     // adds game to session storage
